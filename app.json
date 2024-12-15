@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "stockapp_fe",
-    "slug": "stockapp_fe",
+    "name": "Home Scan",
+    "slug": "stockapp-client",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

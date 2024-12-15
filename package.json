@@ -1,5 +1,5 @@
 {
-  "name": "stockapp_fe",
+  "name": "stockapp_client",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
