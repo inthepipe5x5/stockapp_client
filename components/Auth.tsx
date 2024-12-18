@@ -1,12 +1,12 @@
 import { Button } from "react-native";
-import { makeRedirectUri } from "expo-auth-session";
+import * as AuthSession from "expo-auth-session";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
 import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
 import { supabase } from "../services/supabase";
 
 WebBrowser.maybeCompleteAuthSession(); // required for web only
-const redirectTo = makeRedirectUri();
+const redirectTo = AuthSession.makeRedirectUri();
 
 const createSessionFromUrl = async (url: string) => {
   const { params, errorCode } = QueryParams.getQueryParams(url);
@@ -24,24 +24,33 @@ const createSessionFromUrl = async (url: string) => {
   return data.session;
 };
 
-const performOAuth = async () => {
+type Provider = "google" | "facebook" | "apple";
+
+const performOAuth = async (
+  provider: Provider = "google"
+) => {
+  const redirectUrl = AuthSession.makeRedirectUri({ useProxy: true });
+
   const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: "github",
+    provider,
     options: {
-      redirectTo,
-      skipBrowserRedirect: true,
+      redirectTo: redirectUrl,
     },
   });
+
   if (error) throw error;
 
-  const res = await WebBrowser.openAuthSessionAsync(
-    data?.url ?? "",
-    redirectTo
-  );
-
-  if (res.type === "success") {
-    const { url } = res;
-    await createSessionFromUrl(url);
+  if (data?.url) {
+    const result = await AuthSession.startAsync({ authUrl: data.url });
+    if (result.type === "success") {
+      // Send tokens to your backend
+      await (
+        result.params.access_token,
+        result.params.refresh_token
+      );
+      // Your backend handles session creation and returns necessary info
+      // You can then update your app's state accordingly
+    }
   }
 };
 
