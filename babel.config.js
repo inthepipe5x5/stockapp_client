@@ -11,7 +11,7 @@ export default function (api) {
       root: ["./"],
 
       alias: {
-        "@": "./",
+        "@": "./app",
         "tailwind.config": "./tailwind.config.js"
       }
     }]]
