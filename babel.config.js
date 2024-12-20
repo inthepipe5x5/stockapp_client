@@ -4,14 +4,13 @@ export default function (api) {
     presets: [
       ["babel-preset-expo", { jsxImportSource: "nativewind" }],
       "nativewind/babel",
-      "nativewind/babel"
     ],
 
     plugins: [["module-resolver", {
       root: ["./"],
 
       alias: {
-        "@": "./app",
+        "@": "./",
         "tailwind.config": "./tailwind.config.js"
       }
     }]]
