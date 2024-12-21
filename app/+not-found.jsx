@@ -1,40 +1,25 @@
-import { View, Text, StyleSheet } from "react-native";
-import { Link } from "expo-router";
+import React from "react";
+import { Center } from '@gluestack-ui/themed';
+import { VStack } from '@gluestack-ui/vstack';
+import { Heading, Button, ButtonText, Text } from '@gluestack-ui/themed';
+import { useRouter } from "expo-router";
 
 export default function NotFoundScreen() {
+  const router = useRouter();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>404 - Not Found</Text>
-      <Text style={styles.subtitle}>
-        The page you're looking for doesn't exist.
-      </Text>
-      <Link href="/" style={styles.link}>
-        Go Back Home
-      </Link>
-    </View>
+    <Center flex={1} px={4} bg="background"> {/* Default theme-based background */}
+      <VStack space="md" alignItems="center">
+        <Heading size="xl" color="primary">
+          404 - Page Not Found
+        </Heading>
+        <Text color="muted" textAlign="center">
+          The page you are looking for does not exist or has been moved.
+        </Text>
+        <Button onPress={() => router.push("/")} variant="solid">
+          <ButtonText>Go Back Home</ButtonText>
+        </Button>
+      </VStack>
+    </Center>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "#fff",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 16,
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  link: {
-    fontSize: 16,
-    color: "blue",
-  },
-});
