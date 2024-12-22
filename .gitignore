@@ -37,3 +37,7 @@ yarn-error.*
 
 app-example
 .env
+vscode/settings.json
+
+gluestack-ui-starter-kits/
+/gluestack-ui-starter-kits/

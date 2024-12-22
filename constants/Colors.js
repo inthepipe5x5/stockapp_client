@@ -6,7 +6,7 @@ a JavaScript application. */
 const tintColorLight = '#2f95dc'; //https://www.color-hex.com/color/2f95dc
 const tintColorDark = '#fff'; //white //https://www.color-hex.com/color/ffffff
 
-export default {
+const Colors = {
   light: {
     text: '#000',
     background: '#fff',
@@ -22,3 +22,4 @@ export default {
     tabIconSelected: tintColorDark,
   },
 };
+export default Colors;

@@ -1,7 +1,5 @@
 import React from "react";
-import { Center } from '@gluestack-ui/themed';
-import { VStack } from '@gluestack-ui/vstack';
-import { Heading, Button, ButtonText, Text } from '@gluestack-ui/themed';
+import { Center, VStack, Heading, Button, ButtonText, Text } from '@gluestack-ui/themed';
 import { useRouter } from "expo-router";
 
 export default function NotFoundScreen() {

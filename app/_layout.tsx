@@ -8,9 +8,10 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
 
-import StackNavigator from "@/navigation/StackNavigator";
+import StackNavigator from "@/components/navigation/StackNavigator.jsx";
 import ErrorWrapper from "@/components/errors/ErrorWrapper.jsx";
 import { globalErrorHandler } from "../lib/globalErrorHandler";
+import { useTheme } from "@gluestack-style/react";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -19,6 +20,7 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (loaded) {
@@ -32,7 +34,7 @@ export default function RootLayout() {
 
   const WrappedApp = ErrorWrapper(
     () => (
-      <GluestackUIProvider>
+      <GluestackUIProvider mode={theme.colors.mode}>
         <StackNavigator />
         <StatusBar style="auto" />
       </GluestackUIProvider>
