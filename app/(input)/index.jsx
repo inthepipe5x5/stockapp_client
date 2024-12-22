@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { Text, Button, Center, VStack } from "@gluestack-ui/themed";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
-import { Camera, Box } from "lucide-react-native";
+import { Camera } from "lucide-react-native";
 import QRCode from "react-native-qrcode-svg";
 
 export default function QRView({ props }) {

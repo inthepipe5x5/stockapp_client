@@ -1,7 +1,5 @@
 import React from "react";
-import { Center } from "@gluestack-ui/themed";
-import { VStack } from "@gluestack-ui/vstack";
-import { Heading, Button, Text } from "@gluestack-ui/themed";
+import { Center, VStack, Heading, Button, Text } from "@gluestack-ui/themed";
 import { useTheme } from "@gluestack-ui/themed";
 
 const defaultError = new Error();

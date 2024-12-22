@@ -7,7 +7,7 @@
 export function generateFields(fieldConfigs) {
   return fieldConfigs.map((config) => ({
     name: config.name,
-    type: config.type || Input, // Default to Input if no type is specified
+    type: config.type || "text", // Default to Input if no type is specified
     placeholder: config.placeholder || "",
     icon: config.icon || null,
     iconColor: config.iconColor || null,
