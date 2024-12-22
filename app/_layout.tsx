@@ -1,16 +1,14 @@
-import "../global.css";
 import "@/global.css";
-import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
-
+import { useEffect } from "react";
 import { useFonts } from "expo-font";
+import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
+import "react-native-reanimated";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
-import "react-native-reanimated";
 
 import StackNavigator from "@/components/navigation/StackNavigator.jsx";
 import ErrorWrapper from "@/components/errors/ErrorWrapper.jsx";
-import { globalErrorHandler } from "../lib/globalErrorHandler";
+import { globalErrorHandler } from "@/lib/globalErrorHandler";
 import { useTheme } from "@gluestack-style/react";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.

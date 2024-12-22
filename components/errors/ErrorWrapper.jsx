@@ -1,5 +1,5 @@
 import { ErrorBoundary } from "react-native-error-boundary";
-import FallbackComponent from "./FallbackComponent";
+import FallbackComponent from "@/components/errors/FallbackComponent";
 import React from "react";
 import { globalErrorHandler } from "@/lib/globalErrorHandler";
 
@@ -14,7 +14,7 @@ import { globalErrorHandler } from "@/lib/globalErrorHandler";
 const ErrorWrapper = (
   WrappedComponent,
   FallBack = FallbackComponent,
-  onError = globalErrorHandler
+  errorHandler = globalErrorHandler
 ) => {
   return function ErrorBoundaryWrapper(props) {
     return (
@@ -23,8 +23,9 @@ const ErrorWrapper = (
           <FallBack {...props} {...errorProps} />
         )}
         onError={(error, stackTrace) => {
+          console.error("Caught error in component:", error.message);
           // Call the provided onError handler or fallback to the default handler
-          onError(error, false, stackTrace);
+          errorHandler(error, false, stackTrace);
         }}
       >
         <WrappedComponent {...props} />

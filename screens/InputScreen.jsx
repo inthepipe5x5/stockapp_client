@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { SafeAreaView } from "@/components/ui/safe-area-view";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { useTheme } from "@gluestack-style/react";
-import { newFunction } from "./createForm";
+import { createForm } from "@/components/forms/createForm";
 
 export default function App() {
   const { theme } = useTheme();
@@ -11,7 +11,7 @@ export default function App() {
   return (
     <SafeAreaView className="flex-1 justify-center items-center">
       <GluestackUIProvider >
-        {newFunction(colorMode)}
+        {createForm(colorMode)}
       </GluestackUIProvider>
     </SafeAreaView>
   );
