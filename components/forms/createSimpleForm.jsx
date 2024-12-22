@@ -6,7 +6,8 @@ import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
 import { useTheme } from "@gluestack-style/react";
 
 /**
- * createForm Factory Function
+ * createSimpleForm Factory Function (Manual State Management) 
+ * NOTE: use createControlledForm with react hook form and zod for more complex form creation.
  *
  * @param {Object} config - Configuration for the form.
  * @param {string} config.title - The title of the form.
@@ -15,7 +16,7 @@ import { useTheme } from "@gluestack-style/react";
  * @param {React.ComponentType} ButtonGroup - Custom button group component for form actions.
  * @returns {React.ComponentType} - A Higher-Order Component (HOC) that renders the form.
  */
-export function createForm({ title, description, fields }, ButtonGroup) {
+export function createSimpleForm({ title, description, fields }, ButtonGroup) {
   return function FormComponent() {
     const { theme } = useTheme();
     const [formData, setFormData] = useState(

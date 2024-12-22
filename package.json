@@ -81,6 +81,7 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-error-boundary": "^4.1.2",
+    "react-hook-form": "^7.54.2",
     "react-native": "^0.76.5",
     "react-native-css-interop": "^0.1.22",
     "react-native-error-boundary": "^1.2.7",

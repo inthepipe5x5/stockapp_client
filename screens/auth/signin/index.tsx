@@ -38,7 +38,7 @@ import { GoogleIcon } from "./assets/icons/google";
 import { Pressable } from "@/components/ui/pressable";
 import useRouter from "@unitools/router";
 import { AuthLayout } from "../layout";
-
+import { loginSchema } from "@/lib/schemas/auth";
 const USERS = [
   {
     email: "gabrial@gmail.com",
@@ -74,7 +74,7 @@ const LoginWithLeftBackground = () => {
   });
 
   const onSubmit = (data: LoginSchemaType) => {
-    const user = USERS.find((element) => element.email === data.email);
+    const user = USERS.find((element) => element.email === data.email); //TODO: Replace with API call
     if (user) {
       if (user.password !== data.password)
         setValidated({ emailValid: true, passwordValid: false });
@@ -84,7 +84,7 @@ const LoginWithLeftBackground = () => {
           placement: "bottom right",
           render: ({ id }) => {
             return (
-              <Toast nativeID={id} variant="accent" action="success">
+              <Toast nativeID={id} variant="solid" action="success">
                 <ToastTitle>Logged in successfully!</ToastTitle>
               </Toast>
             );
