@@ -1,6 +1,6 @@
-import { getDefaultConfig } from 'expo/metro-config';
-import { withNativeWind } from 'nativewind/metro';
-  
+const { getDefaultConfig } = require('expo/metro-config'); // eslint-disable-line
+const { withNativeWind } = require('nativewind/metro'); //eslint-disable-line
+
 const config = getDefaultConfig(__dirname);
-  
-export default withNativeWind(config, { input: './global.css' });
+
+module.exports = withNativeWind(config, { input: './global.css' });
