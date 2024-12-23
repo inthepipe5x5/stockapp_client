@@ -1,5 +1,5 @@
 /**
- * Helper function to generate fields
+ * Helper function to generate form fields as an array of objects.
  *
  * @param {Array} fieldConfigs - Array of field configurations.
  * @returns {Array} - Array of field objects.
