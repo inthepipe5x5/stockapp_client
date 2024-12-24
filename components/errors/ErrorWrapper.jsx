@@ -1,4 +1,4 @@
-import { ErrorBoundary } from "react-native-error-boundary";
+import { ErrorBoundary } from "react-native-error-boundary"
 import FallbackComponent from "@/components/errors/FallbackComponent";
 import React from "react";
 import { globalErrorHandler } from "@/lib/globalErrorHandler";
