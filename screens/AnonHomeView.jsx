@@ -37,4 +37,4 @@ const AnonHomeView = async () => {
     );
 }
 
-export default AnonHome;
+export default AnonHomeView;

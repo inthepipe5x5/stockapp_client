@@ -60,9 +60,6 @@ const USERS = [
 ];
 
 
-
-type LoginSchemaType = z.infer<typeof loginSchema>;
-
 const LoginWithLeftBackground = () => {
   const {
     control,
