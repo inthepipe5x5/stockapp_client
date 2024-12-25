@@ -1,3 +1,6 @@
+/*
+GLUESTACK PROFILE TEMPLATE
+*/ 
 import React, { useRef, useState } from "react";
 import { Box } from "@/components/ui/box";
 import { HStack } from "@/components/ui/hstack";

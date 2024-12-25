@@ -1,3 +1,8 @@
+/*
+FROM GLUESTACK STARTER KIT
+SOURCE: AUTH/SIGNIN
+https://github.com/gluestack/gluestack-ui-starter-kits/blob/main/expo-app/screens/auth/signin/index.tsx
+ */
 import React, { useState } from "react";
 import { Toast, ToastTitle, useToast } from "@/components/ui/toast";
 import { HStack } from "@/components/ui/hstack";

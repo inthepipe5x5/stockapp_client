@@ -1,3 +1,8 @@
+/*
+GLUESTACK PROFILE TEMPLATE
+SOURCE: gluestack starter kit 
+https://github.com/gluestack/gluestack-ui-starter-kits/blob/main/expo-app/screens/auth/create-password/index.tsx
+*/ 
 import { useState } from "react";
 import { Toast, ToastTitle, useToast } from "@/components/ui/toast";
 import { VStack } from "@/components/ui/vstack";
@@ -22,31 +27,7 @@ import { AlertTriangle } from "lucide-react-native";
 import { Pressable } from "@/components/ui/pressable";
 import useRouter from "@unitools/router";
 import { AuthLayout } from "../layout";
-
-const createPasswordSchema = z.object({
-  password: z
-    .string()
-    .min(6, "Must be at least 8 characters in length")
-    .regex(new RegExp(".*[A-Z].*"), "One uppercase character")
-    .regex(new RegExp(".*[a-z].*"), "One lowercase character")
-    .regex(new RegExp(".*\\d.*"), "One number")
-    .regex(
-      new RegExp(".*[`~<>?,./!@#$%^&*()\\-_+=\"'|{}\\[\\];:\\\\].*"),
-      "One special character"
-    ),
-  confirmpassword: z
-    .string()
-    .min(6, "Must be at least 8 characters in length")
-    .regex(new RegExp(".*[A-Z].*"), "One uppercase character")
-    .regex(new RegExp(".*[a-z].*"), "One lowercase character")
-    .regex(new RegExp(".*\\d.*"), "One number")
-    .regex(
-      new RegExp(".*[`~<>?,./!@#$%^&*()\\-_+=\"'|{}\\[\\];:\\\\].*"),
-      "One special character"
-    ),
-});
-
-type CreatePasswordSchemaType = z.infer<typeof createPasswordSchema>;
+import { CreatePasswordSchemaType, createPasswordSchema } from "@/lib/schemas/passwordSchema";
 
 const CreatePasswordWithLeftBackground = () => {
   const {
