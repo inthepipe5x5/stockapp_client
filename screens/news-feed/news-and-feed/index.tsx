@@ -4,87 +4,26 @@ import {
   ChevronLeftIcon,
   DownloadIcon,
   Icon,
-  MenuIcon,
   SearchIcon,
 } from "@/components/ui/icon";
 import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { Pressable } from "@/components/ui/pressable";
-import type { LucideIcon } from "lucide-react-native";
-import { FeedIcon } from "./assets/icons/feed";
-import { GlobeIcon } from "./assets/icons/globe";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { useState } from "react";
 import { Heading } from "@/components/ui/heading";
-import Image from "@unitools/image";
+import { Image } from "expo-image";
 import { ScrollView } from "@/components/ui/scroll-view";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
 import {
   Avatar,
   AvatarFallbackText,
-  AvatarImage,
 } from "@/components/ui/avatar";
-import useRouter from "@unitools/router";
-import { HomeIcon } from "./assets/icons/home";
-import { HeartIcon } from "./assets/icons/heart";
-import { ProfileIcon } from "./assets/icons/profile";
+import { useRouter } from "expo-router";
 import { SafeAreaView } from "@/components/ui/safe-area-view";
-import { cn } from "@gluestack-ui/nativewind-utils/cn";
-import { Platform } from "react-native";
-type MobileHeaderProps = {
-  title: string;
-};
-
-type HeaderProps = {
-  title: string;
-  toggleSidebar: () => void;
-};
-
-type Icons = {
-  iconName: LucideIcon | typeof Icon;
-};
-const list: Icons[] = [
-  {
-    iconName: HomeIcon,
-  },
-  {
-    iconName: FeedIcon,
-  },
-  {
-    iconName: GlobeIcon,
-  },
-  {
-    iconName: HeartIcon,
-  },
-];
-type BottomTabs = {
-  iconName: LucideIcon | typeof Icon;
-  iconText: string;
-};
-const bottomTabsList: BottomTabs[] = [
-  {
-    iconName: HomeIcon,
-    iconText: "Home",
-  },
-
-  {
-    iconName: GlobeIcon,
-    iconText: "Community",
-  },
-  {
-    iconName: FeedIcon,
-    iconText: "Feed",
-  },
-  {
-    iconName: HeartIcon,
-    iconText: "Favourite",
-  },
-  {
-    iconName: ProfileIcon,
-    iconText: "Profile",
-  },
-];
+import  MobileFooter  from "@/screens/components/MobileFooter.tsx";
+import WebHeader from "@/screens/components/WebHeader.js";
 
 interface BlogData {
   bannerUri: string;
@@ -176,23 +115,7 @@ const CREATORS_DATA: CreatorData[] = [
   },
 ];
 
-const Sidebar = () => {
-  return (
-    <VStack
-      className="w-14 pt-5 h-full items-center border-r border-border-300"
-      space="xl"
-    >
-      {list.map((item, index) => {
-        return (
-          <Pressable key={index}>
-            <Icon as={item.iconName} size="xl" />
-          </Pressable>
-        );
-      })}
-    </VStack>
-  );
-};
-
+//DashboardLayout component - used in dashboard screens, newsfeed screens, profile screens
 const DashboardLayout = (props: any) => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(
     props.isSidebarVisible
@@ -220,64 +143,6 @@ const DashboardLayout = (props: any) => {
     </VStack>
   );
 };
-
-function MobileFooter({ footerIcons }: { footerIcons: any }) {
-  const router = useRouter();
-  return (
-    <HStack
-      className={cn(
-        "bg-background-0 justify-between w-full absolute left-0 bottom-0 right-0 p-3 overflow-hidden items-center  border-t-border-300  md:hidden border-t",
-        { "pb-5": Platform.OS === "ios" },
-        { "pb-5": Platform.OS === "android" }
-      )}
-    >
-      {footerIcons.map(
-        (
-          item: { iconText: string; iconName: any },
-          index: React.Key | null | undefined
-        ) => {
-          return (
-            <Pressable
-              className="px-0.5 flex-1 flex-col items-center"
-              key={index}
-              onPress={() => router.push("/news-feed/news-and-feed")}
-            >
-              <Icon
-                as={item.iconName}
-                size="md"
-                className="h-[32px] w-[65px]"
-              />
-              <Text className="text-xs text-center text-typography-600">
-                {item.iconText}
-              </Text>
-            </Pressable>
-          );
-        }
-      )}
-    </HStack>
-  );
-}
-
-function WebHeader(props: HeaderProps) {
-  return (
-    <HStack className="pt-4 pr-10 pb-3 bg-background-0 items-center justify-between border-b border-border-300">
-      <HStack className="items-center">
-        <Pressable
-          onPress={() => {
-            props.toggleSidebar();
-          }}
-        >
-          <Icon as={MenuIcon} size="lg" className="mx-5" />
-        </Pressable>
-        <Text className="text-2xl">{props.title}</Text>
-      </HStack>
-
-      <Avatar className="h-9 w-9">
-        <AvatarFallbackText className="font-light">A</AvatarFallbackText>
-      </Avatar>
-    </HStack>
-  );
-}
 
 function MobileHeader(props: MobileHeaderProps) {
   const router = useRouter();

@@ -21,8 +21,8 @@ export const AuthLayout = (props: AuthLayoutProps) => {
             space="md"
           >
             <Image
-              height="100%"
-              width="100%"
+              height={100}
+              width={100}
               source={require("@/assets/auth/radialGradient.png")}
               className="object-cover h-full w-full"
               alt="Radial Gradient"

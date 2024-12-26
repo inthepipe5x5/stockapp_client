@@ -15,18 +15,16 @@ import { ArrowLeftIcon, Icon } from "@/components/ui/icon";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Keyboard } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { z } from "zod";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertTriangle } from "lucide-react-native";
-import useRouter from "@unitools/router";
+import { useRouter } from "expo-router";
 import { Pressable } from "@/components/ui/pressable";
 import { AuthLayout } from "../layout";
-
-const forgotPasswordSchema = z.object({
-  email: z.string().min(1, "Email is required").email(),
-});
-
-type forgotPasswordSchemaType = z.infer<typeof forgotPasswordSchema>;
+import {
+  forgotPasswordSchema,
+  forgotPasswordSchemaType,
+} from "@/lib/schemas/authSchemas";
 
 const ForgotPasswordScreen = () => {
   const {
@@ -44,7 +42,7 @@ const ForgotPasswordScreen = () => {
       placement: "bottom right",
       render: ({ id }) => {
         return (
-          <Toast nativeID={id} variant="accent" action="success">
+          <Toast nativeID={id} variant="outline" action="success">
             <ToastTitle>Link Sent Successfully</ToastTitle>
           </Toast>
         );
@@ -59,7 +57,7 @@ const ForgotPasswordScreen = () => {
   };
   const router = useRouter();
   return (
-   <VStack className="max-w-[440px] w-full" space="md">
+    <VStack className="max-w-[440px] w-full" space="md">
       <VStack className="md:items-center" space="md">
         <Pressable
           onPress={() => {

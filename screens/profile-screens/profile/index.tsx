@@ -7,12 +7,10 @@ import { HStack } from "@/components/ui/hstack";
 import {
   AlertCircleIcon,
   ChevronDownIcon,
-  ChevronLeftIcon,
   ChevronRightIcon,
   CloseIcon,
   EditIcon,
   Icon,
-  MenuIcon,
   PhoneIcon,
   SettingsIcon,
 } from "@/components/ui/icon";
@@ -22,7 +20,7 @@ import { Pressable } from "@/components/ui/pressable";
 import { AlertCircle, type LucideIcon } from "lucide-react-native";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
-import Image from "@unitools/image";
+import Image from "image-expo";
 import { ScrollView } from "@/components/ui/scroll-view";
 import {
   Modal,
@@ -36,15 +34,13 @@ import { Input, InputField } from "@/components/ui/input";
 import {
   Avatar,
   AvatarBadge,
-  AvatarFallbackText,
   AvatarImage,
 } from "@/components/ui/avatar";
-import useRouter from "@unitools/router";
+import { useRouter } from "expo-router";
 import { ProfileIcon } from "./assets/icons/profile";
 import { SafeAreaView } from "@/components/ui/safe-area-view";
 import { Center } from "@/components/ui/center";
-import { cn } from "@gluestack-ui/nativewind-utils/cn";
-import { Keyboard, Platform } from "react-native";
+import { Keyboard } from "react-native";
 import { SubscriptionIcon } from "./assets/icons/subscription";
 import { DownloadIcon } from "./assets/icons/download";
 import { FaqIcon } from "./assets/icons/faq";
@@ -308,85 +304,6 @@ const DashboardLayout = (props: any) => {
   );
 };
 
-function MobileFooter({ footerIcons }: { footerIcons: any }) {
-  const router = useRouter();
-  return (
-    <HStack
-      className={cn(
-        "bg-background-0 justify-between w-full absolute left-0 bottom-0 right-0 p-3 overflow-hidden items-center  border-t-border-300  md:hidden border-t",
-        { "pb-5": Platform.OS === "ios" },
-        { "pb-5": Platform.OS === "android" }
-      )}
-    >
-      {footerIcons.map(
-        (
-          item: { iconText: string; iconName: any },
-          index: React.Key | null | undefined
-        ) => {
-          return (
-            <Pressable
-              className="px-0.5 flex-1 flex-col items-center"
-              key={index}
-              onPress={() => router.push("/news-feed/news-and-feed")}
-            >
-              <Icon
-                as={item.iconName}
-                size="md"
-                className="h-[32px] w-[65px]"
-              />
-              <Text className="text-xs text-center text-typography-600">
-                {item.iconText}
-              </Text>
-            </Pressable>
-          );
-        }
-      )}
-    </HStack>
-  );
-}
-
-function WebHeader(props: HeaderProps) {
-  return (
-    <HStack className="pt-4 pr-10 pb-3 bg-background-0 items-center justify-between border-b border-border-300">
-      <HStack className="items-center">
-        <Pressable
-          onPress={() => {
-            props.toggleSidebar();
-          }}
-        >
-          <Icon as={MenuIcon} size="lg" className="mx-5" />
-        </Pressable>
-        <Text className="text-2xl">{props.title}</Text>
-      </HStack>
-
-      <Avatar className="h-9 w-9">
-        <AvatarFallbackText className="font-light">A</AvatarFallbackText>
-      </Avatar>
-    </HStack>
-  );
-}
-
-function MobileHeader(props: MobileHeaderProps) {
-  const router = useRouter();
-  return (
-    <HStack
-      className="py-6 px-4 border-b border-border-300 bg-background-0 items-center justify-between"
-      space="md"
-    >
-      <HStack className="items-center" space="sm">
-        <Pressable
-          onPress={() => {
-            router.back();
-          }}
-        >
-          <Icon as={ChevronLeftIcon} />
-        </Pressable>
-        <Text className="text-xl">{props.title}</Text>
-      </HStack>
-      <Icon as={HeartIcon} className="h-8 w-20" />
-    </HStack>
-  );
-}
 type userSchemaDetails = z.infer<typeof userSchema>;
 
 // Define the Zod schema
@@ -480,8 +397,8 @@ const MainContent = () => {
               <Avatar size="2xl" className="bg-primary-600">
                 <AvatarImage
                   alt="Profile Image"
-                  height={"100%"}
-                  width={"100%"}
+                  height={100}
+                  width={100}
                   source={require("@/assets/profile-screens/profile/image.png")}
                 />
                 <AvatarBadge />

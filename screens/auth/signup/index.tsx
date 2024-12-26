@@ -4,8 +4,7 @@ import { HStack } from "@/components/ui/hstack";
 import { VStack } from "@/components/ui/vstack";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import { LinkText } from "@/components/ui/link";
-import Link from "@unitools/link";
+import { Link, LinkText } from "@/components/ui/link";
 import {
   FormControl,
   FormControlError,
@@ -36,7 +35,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertTriangle } from "lucide-react-native";
 import { GoogleIcon } from "./assets/icons/google";
 import { Pressable } from "@/components/ui/pressable";
-import useRouter from "@unitools/router";
+import { useRouter } from "expo-router";
 import { AuthLayout } from "../layout";
 
 const signUpSchema = z.object({
@@ -82,7 +81,7 @@ const SignUpWithLeftBackground = () => {
         placement: "bottom right",
         render: ({ id }) => {
           return (
-            <Toast nativeID={id} variant="accent" action="success">
+            <Toast nativeID={id} variant="outline" action="success">
               <ToastTitle>Success</ToastTitle>
             </Toast>
           );
@@ -94,7 +93,7 @@ const SignUpWithLeftBackground = () => {
         placement: "bottom right",
         render: ({ id }) => {
           return (
-            <Toast nativeID={id} variant="accent" action="error">
+            <Toast nativeID={id} variant="outline" action="error"> 
               <ToastTitle>Passwords do not match</ToastTitle>
             </Toast>
           );
@@ -120,6 +119,7 @@ const SignUpWithLeftBackground = () => {
     handleSubmit(onSubmit)();
   };
   const router = useRouter();
+
   return (
     <VStack className="max-w-[440px] w-full" space="md">
       <VStack className="md:items-center" space="md">

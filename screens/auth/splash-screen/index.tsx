@@ -7,7 +7,7 @@ import {
 } from "./assets/icons/gluestack-icon";
 import { useColorScheme } from "nativewind";
 
-import useRouter from "@unitools/router";
+import { useRouter } from "expo-router";
 import { AuthLayout } from "../layout";
 
 const SplashScreenWithLeftBackground = () => {

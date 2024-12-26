@@ -25,7 +25,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertTriangle } from "lucide-react-native";
 import { Pressable } from "@/components/ui/pressable";
-import useRouter from "@unitools/router";
+import { useRouter } from "expo-router";
 import { AuthLayout } from "../layout";
 import { CreatePasswordSchemaType, createPasswordSchema } from "@/lib/schemas/passwordSchema";
 
@@ -46,7 +46,7 @@ const CreatePasswordWithLeftBackground = () => {
         placement: "bottom right",
         render: ({ id }) => {
           return (
-            <Toast nativeID={id} variant="accent" action="success">
+            <Toast nativeID={id} variant="outline" action="success">
               <ToastTitle>Success</ToastTitle>
             </Toast>
           );
@@ -58,7 +58,7 @@ const CreatePasswordWithLeftBackground = () => {
         placement: "bottom right",
         render: ({ id }) => {
           return (
-            <Toast nativeID={id} variant="accent" action="error">
+            <Toast nativeID={id} variant="outline" action="error">
               <ToastTitle>Passwords do not match</ToastTitle>
             </Toast>
           );
