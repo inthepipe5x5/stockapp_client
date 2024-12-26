@@ -11,7 +11,8 @@ import { ProfileIcon } from "../../assets/icons/profile";
     iconName: LucideIcon | typeof Icon;
     iconText: string;
   };
-const bottomTabsList: BottomTabs[] = [
+
+  const bottomTabsList: BottomTabs[] = [
 {
     iconName: HomeIcon,
     iconText: "Home",
@@ -34,3 +35,5 @@ const bottomTabsList: BottomTabs[] = [
     iconText: "Profile",
 },
 ];
+
+export { bottomTabsList };

@@ -11,27 +11,33 @@ import { HeartIcon } from "../../assets/icons/heart";
 import { ProfileIcon } from "../../assets/icons/profile";
 type Icons = {
   iconName: LucideIcon | typeof LCNIcon;
+  iconText?: string;
 };
 
 const list: Icons[] = [
   {
     iconName: ProfileIcon,
+    iconText: "Profile",
   },
   {
     iconName: HomeIcon,
+    iconText: "Home",
   },
   {
     iconName: Inbox,
+    iconText: "Inbox",
   },
   {
     iconName: GlobeIcon,
+    iconText: "Household",
   },
   {
     iconName: HeartIcon,
+    iconText: "Favourites",
   },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({}) => {
   const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const handlePress = (index: number) => {
