@@ -8,7 +8,10 @@ module.exports = function (api) {
       ["module-resolver", {
         root: ["./"],
         alias: {
-          "@": "./",
+          "@": "./", //root directory
+          "@components": "./components",
+          "@screens": "./screens",
+          "@gsui": "@gluestack-ui",
           "tailwind.config": "./tailwind.config.js"
         }
       }]

@@ -1,10 +1,10 @@
 import type { LucideIcon } from "lucide-react-native";
 import { Icon } from "lucide-react-native";
 import { Inbox } from "lucide-react-native";
-import { GlobeIcon } from "../../assets/icons/globe";
-import { HomeIcon } from "../../assets/icons/home";
-import { HeartIcon } from "../../assets/icons/heart";
-import { ProfileIcon } from "../../assets/icons/profile";
+import { GlobeIcon } from "../assets/icons/globe";
+import { HomeIcon } from "../assets/icons/home";
+import { HeartIcon } from "../assets/icons/heart";
+import { ProfileIcon } from "../assets/icons/profile";
 
   
   type BottomTabs = {
@@ -36,4 +36,4 @@ import { ProfileIcon } from "../../assets/icons/profile";
 },
 ];
 
-export { bottomTabsList };
+export { bottomTabsList, BottomTabs };

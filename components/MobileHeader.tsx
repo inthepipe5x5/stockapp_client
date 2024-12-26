@@ -1,5 +1,5 @@
 import { Text, Pressable } from "@gluestack-ui/themed";
-import { HStack } from "../../components/ui/hstack";
+import { HStack } from "./ui/hstack";
 import { ChevronLeftIcon, Icon } from "@/components/ui/icon";
 
 import { useRouter } from "expo-router";

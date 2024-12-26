@@ -5,16 +5,32 @@ import { useRouter } from "expo-router";
 import type { LucideIcon } from "lucide-react-native";
 import { Icon as LCNIcon } from "lucide-react-native";
 import { Inbox } from "lucide-react-native";
-import { GlobeIcon } from "../../assets/icons/globe";
-import { HomeIcon } from "../../assets/icons/home";
-import { HeartIcon } from "../../assets/icons/heart";
-import { ProfileIcon } from "../../assets/icons/profile";
+import { GlobeIcon } from "../assets/icons/globe";
+import { HomeIcon } from "../assets/icons/home";
+import { HeartIcon } from "../assets/icons/heart";
+import { ProfileIcon } from "../assets/icons/profile";
 type Icons = {
   iconName: LucideIcon | typeof LCNIcon;
   iconText?: string;
 };
 
-const list: Icons[] = [
+type SidebarProps = {
+  iconList: Icons[];
+
+  className?: string;
+};
+
+export function Sidebar({ iconList, className }: SidebarProps) {
+  return (
+    <div className={className}>
+      {iconList.map((icon, index) => (
+        <Icon key={index} {...icon} />
+      ))}
+    </div>
+  );
+}
+
+const SideBarContentList: Icons[] = [
   {
     iconName: ProfileIcon,
     iconText: "Profile",
@@ -37,7 +53,7 @@ const list: Icons[] = [
   },
 ];
 
-const Sidebar = ({}) => {
+const Sidebar = (iconList: Icons[] = SideBarContentList) => {
   const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const handlePress = (index: number) => {
@@ -50,7 +66,7 @@ const Sidebar = ({}) => {
       className="w-14 pt-5 h-full items-center border-r border-border-300"
       space="xl"
     >
-      {list.map((item, index) => {
+      {iconList.map((item, index) => {
         return (
           <Pressable
             key={index}
@@ -71,4 +87,4 @@ const Sidebar = ({}) => {
   );
 };
 
-export default Sidebar;
+export { Sidebar, SideBarContentList, Icons };

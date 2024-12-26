@@ -22,8 +22,8 @@ import {
 } from "@/components/ui/avatar";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "@/components/ui/safe-area-view";
-import  MobileFooter  from "@/screens/components/MobileFooter.tsx";
-import WebHeader from "@/screens/components/WebHeader.js";
+import  MobileFooter  from "@/components/MobileFooter";
+import WebHeader from "@/components/WebHeader.js";
 
 interface BlogData {
   bannerUri: string;
