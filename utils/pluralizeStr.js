@@ -173,4 +173,4 @@ console.log(singularizeStr("capilliaries", {})); // capilliary
 console.log(singularizeStr("children")); // child
 console.log(singularizeStr("geese")); // goose
 
-module.exports = { pluralizeStr, singularizeStr };
+module.exports = { irregularWordObj, pluralizeStr, singularizeStr };
