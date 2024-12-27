@@ -8,7 +8,7 @@ import React, {
 import * as SecureStore from "expo-secure-store";
 import { router } from "expo-router";
 
-import supabase from "@/lib/supabase";
+import supabase from "../services/supabase";
 import defaultUserPreferences from "../constants/userPreferences";
 
 const appName = "stock_app"; // TODO: possibly change this to dynamically get the app name
@@ -232,9 +232,10 @@ async function signOut(dispatch) {
 const UserSessionContext = createContext({
   state: defaultSession,
   dispatch: () => {},
-  signIn: () => {},
+  signIn: (credentials) => {}, // accepts credentials for OAuth or password-based login
   signOut: () => {},
 });
+
 
 /** ---------------------------
  *  UserSessionProvider

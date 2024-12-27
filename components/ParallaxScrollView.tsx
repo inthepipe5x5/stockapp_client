@@ -7,12 +7,12 @@ import Animated, {
   useScrollViewOffset,
 } from "react-native-reanimated";
 import { Box } from "@gluestack-ui/themed"; // Gluestack components
-import MobileHeader from "@/components/MobileHeader.jsx";
-import MobileFooter from "@/components/MobileFooter.jsx";
-import { Sidebar, Icons, SideBarContentList } from "@/components/Sidebar";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import MobileHeader from "../components/MobileHeader.jsx";
+import MobileFooter from "../components/MobileFooter.jsx";
+import { Sidebar, Icons, SideBarContentList } from "../components/Sidebar";
+import { useColorScheme } from "../hooks/useColorScheme";
 import { viewPort } from "../constants/dimensions.js";
-import { bottomTabsList, BottomTabs } from "@/components/BottomTabs.jsx";
+import { bottomTabsList, BottomTabs } from "../components/BottomTabs.jsx";
 
 const HEADER_HEIGHT = viewPort?.header?.height ?? 250;
 
@@ -30,9 +30,9 @@ export default function ParallaxScrollView({
   headerComponent,
   headerBackgroundColor,
   headerTitle = "Default Title",
-  sidebarProps=SideBarContentList,
+  sidebarProps = SideBarContentList,
   FixedFooter,
-  FooterContent=bottomTabsList,
+  FooterContent = bottomTabsList,
 }: Props) {
   const colorScheme = useColorScheme() ?? "light";
   const scrollRef = useAnimatedRef<Animated.ScrollView>();

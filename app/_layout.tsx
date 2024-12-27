@@ -24,6 +24,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const queryClient = new QueryClient();
+  
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
@@ -54,7 +55,7 @@ export default function RootLayout() {
   // return <WrappedApp />;
 
   return (
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={queryClient}>
       <UserSessionProvider>
         <GluestackUIProvider mode={theme?.colors?.mode ?? "system"}>
           <StackNavigator />

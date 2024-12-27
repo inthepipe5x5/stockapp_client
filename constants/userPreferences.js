@@ -1,4 +1,4 @@
-import * as default_preferences from "./constants/default_preferences.json";
+import * as default_preferences from "./default_preferences.json";
 /** ---------------------------
  *        Default preferences
  *  ---------------------------
