@@ -5,10 +5,10 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { supabase } from "@/lib/supabase";
 import * as SecureStore from "expo-secure-store";
 import { router } from "expo-router";
 
+import supabase from "@/lib/supabase";
 import defaultUserPreferences from "../constants/userPreferences";
 
 const appName = "stock_app"; // TODO: possibly change this to dynamically get the app name
@@ -22,7 +22,7 @@ const appName = "stock_app"; // TODO: possibly change this to dynamically get th
  */
 const defaultSession = {
   user: null,
-  preferences: null,
+  preferences: defaultUserPreferences,
   token: null,
   session: null,
   drafts: [],
@@ -75,62 +75,57 @@ const initialSession = async () => {
  *  Enumerated action types
  *  for maintainability.
  */
+// Action Types
 const actionTypes = Object.freeze({
-  //freeze the object to prevent changes
-  SET_USER: "SET_USER",
-  SET_TOKEN: "SET_TOKEN",
   SET_SESSION: "SET_SESSION",
+  SET_USER: "SET_USER", // set the user when sign in or sign up or user switch
   SET_PREFERENCES: "SET_PREFERENCES",
-  SET_DRAFTS: "SET_DRAFTS",
   LOGOUT: "LOGOUT",
 });
 
 /** ---------------------------
  *       Reducer Function
  *  ---------------------------
- *  Defines how each action updates
- *  the global state.
+ * Reducer function to manage the user session state.
+ *
+ * @param {Object} state - The current state of the session.
+ * @param {Object} action - The action object to determine the state change.
+ * @param {string} action.type - The type of action to be performed.
+ * @param {Object} [action.payload] - The payload containing data for the action.
+ * @returns {Object} The new state after applying the action.
  */
-function sessionReducer(state, action) {
+
+const sessionReducer = (state, action) => {
   switch (action.type) {
+    case actionTypes.SET_SESSION:
+      return {
+        ...state,
+        session: action.payload,
+        user: action.payload?.user || null,
+        token: action.payload?.access_token || null,
+        preferences:
+          action.payload?.user?.preferences ?? defaultUserPreferences,
+      };
     case actionTypes.SET_USER:
       return { ...state, user: action.payload };
-
-    case actionTypes.SET_TOKEN:
-      return { ...state, token: action.payload };
-
-    case actionTypes.SET_SESSION:
-      return { ...state, session: action.payload };
-
     case actionTypes.SET_PREFERENCES:
       return { ...state, preferences: action.payload };
-
-    case actionTypes.SET_DRAFTS:
-      return { ...state, drafts: action.payload };
-
     case actionTypes.LOGOUT:
       return { ...defaultSession };
-
     default:
       return state;
   }
-}
-
-/** ---------------------------
- *   Create React Context
- *  ---------------------------
- */
-const UserSessionContext = createContext({
-  state: defaultSession,
-  dispatch: () => {},
-});
+};
 
 /** ---------------------------
  *  Helper: Storing the session
  *  ---------------------------
- */
+*  Stores the user session in the secure store.
+*  @param {Object} sessionObj - The session object to store. 
+  
+* NOTE: storing the entire user session for simplicity.
+*/
 async function storeUserSession(sessionObj) {
-  // For convenience, you can store the entire session rather than just the token
   await AsyncStorage.setItem(`${appName}_session`, JSON.stringify(sessionObj));
 }
 
@@ -140,31 +135,25 @@ async function storeUserSession(sessionObj) {
  *  Restores user session from
  *  AsyncStorage if available.
  */
-async function initializeAuth(dispatch) {
+// Fetch and initialize session
+const fetchSession = async () => {
   try {
-    const storedSession = await AsyncStorage.getItem(`${appName}_session`);
+    const storedSession = await SecureStore.getItemAsync(`${appName}_session`);
     if (storedSession) {
       const parsedSession = JSON.parse(storedSession);
-      // e.g. set session, user, etc
-      dispatch({ type: actionTypes.SET_USER, payload: parsedSession.user });
-      dispatch({ type: actionTypes.SET_TOKEN, payload: parsedSession.token });
-      dispatch({
-        type: actionTypes.SET_PREFERENCES,
-        payload: parsedSession.preferences,
-      });
-      dispatch({
-        type: actionTypes.SET_SESSION,
-        payload: parsedSession.session,
-      });
-    } else {
-      // If no session is found, direct user to login
-      router.push("/login");
+      return parsedSession;
     }
+
+    const { data, error } = await supabase.auth.getSession();
+    if (error || !data?.session) return defaultSession;
+
+    await storeSession(data.session);
+    return data.session;
   } catch (error) {
-    console.error("Error initializing auth:", error);
-    router.push("/login");
+    console.error("Error fetching session:", error);
+    return defaultSession;
   }
-}
+};
 
 /** ---------------------------
  *  Sign In Logic (v1 or v2)
@@ -172,43 +161,52 @@ async function initializeAuth(dispatch) {
  *  Adjust for your version of
  *  Supabase auth methods.
  */
-const signIn = async ({ email, password }, dispatch) => {
+const signIn = async (
+  { email, password, access_token, oauthProvider },
+  dispatch
+) => {
   try {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    let data, error;
+
+    if (access_token && oauthProvider) {
+      // OAuth-based sign-in
+      const { data: oauthData, error: oauthError } =
+        await supabase.auth.signInWithOAuth({
+          provider: oauthProvider,
+          access_token,
+        });
+
+      data = oauthData;
+      error = oauthError;
+    } else if (password) {
+      // Password-based sign-in
+      const { data: passwordData, error: passwordError } =
+        await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+      data = passwordData;
+      error = passwordError;
+    } else {
+      throw new Error(
+        "Either 'password' or 'access_token' with 'oauthProvider' must be provided"
+      );
+    }
+
     if (error) {
-      console.error("Error logging in user:", error);
+      console.error("Sign-in error:", error.message);
       return router.push("/login");
     }
 
-    // If sign-in succeeds, store session
-    // 'data.session' includes access_token, user, etc
     if (data.session) {
-      await storeUserSession({
-        token: data.session.access_token,
-        user: data.session.user,
-        preferences: data.session.user?.preferences ?? defaultUserPreferences,
-        session: data.session,
-      });
+      await storeSession(data.session);
 
-      // Dispatch local state updates
-      dispatch({ type: actionTypes.SET_USER, payload: data.session.user });
-      dispatch({
-        type: actionTypes.SET_TOKEN,
-        payload: data.session.access_token,
-      });
-      dispatch({
-        type: actionTypes.SET_PREFERENCES,
-        payload: data.session.user?.preferences ?? defaultUserPreferences,
-      });
       dispatch({ type: actionTypes.SET_SESSION, payload: data.session });
-
       router.push("/home");
     }
   } catch (err) {
-    console.error("Sign in error:", err);
+    console.error("Sign-in error:", err);
     router.push("/login");
   }
 };
@@ -217,48 +215,64 @@ const signIn = async ({ email, password }, dispatch) => {
  *  signOut helper
  *  ---------------------------
  */
-const signOut = async (dispatch) => {
+async function signOut(dispatch) {
   try {
     await supabase.auth.signOut();
-    await AsyncStorage.removeItem(`${appName}_session`);
+    await SecureStore.deleteItemAsync(`${appName}_session`);
     dispatch({ type: actionTypes.LOGOUT });
     router.push("/login");
   } catch (err) {
-    console.error("Sign out error:", err);
+    console.error("Sign-out error:", err);
   }
-};
+}
+/** ---------------------------
+ *   Create React Context
+ *  ---------------------------
+ */
+const UserSessionContext = createContext({
+  state: defaultSession,
+  dispatch: () => {},
+  signIn: () => {},
+  signOut: () => {},
+});
 
 /** ---------------------------
  *  UserSessionProvider
  *  ---------------------------
  */
-export const UserSessionProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(sessionReducer, initialSession());
 
-  // On initial mount, attempt to restore session from AsyncStorage
+// Provider Component
+export const UserSessionProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(sessionReducer, defaultSession);
+
   useEffect(() => {
-    initializeAuth(dispatch);
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "TOKEN_REFRESHED" || event === "SIGNED_IN" || event === "USER_UPDATED" || event === "active") {
-        dispatch({ type: "SET_AUTH", payload: session?.user });
+    const initialize = async () => {
+      const session = await fetchSession();
+      dispatch({ type: actionTypes.SET_SESSION, payload: session });
+    };
+
+    initialize();
+
+    // Listen for auth state changes
+    const { data: subscription } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (["SIGNED_IN", "TOKEN_REFRESHED", "USER_UPDATED"].includes(event)) {
+          dispatch({ type: actionTypes.SET_SESSION, payload: session });
+        } else if (event === "SIGNED_OUT") {
+          dispatch({ type: actionTypes.LOGOUT });
+        }
       }
-      if (event === "SIGNED_OUT") {
-        dispatch({ type: "LOGOUT" });
-      }
-    });
+    );
+
+    return () => subscription?.unsubscribe();
   }, []);
 
-  // Callback versions for stable function references
   const handleSignIn = useCallback((userCredentials) => {
     signIn(userCredentials, dispatch);
   }, []);
 
   const handleSignOut = useCallback(() => {
     signOut(dispatch);
-  }, []);
-
-  const handleSetResource = useCallback((resource) => {
-    setResource(dispatch, resource);
   }, []);
 
   return (
@@ -268,7 +282,6 @@ export const UserSessionProvider = ({ children }) => {
         dispatch,
         signIn: handleSignIn,
         signOut: handleSignOut,
-        setResource: handleSetResource,
       }}
     >
       {children}

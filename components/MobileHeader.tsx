@@ -1,27 +1,18 @@
 import { Text, Pressable } from "@gluestack-ui/themed";
 import { HStack } from "./ui/hstack";
-import { ChevronLeftIcon, Icon } from "@/components/ui/icon";
-
-import { useRouter } from "expo-router";
+import HeaderBackButton from "./navigation/HeaderBackButton";
 
 type MobileHeaderProps = {
   title: string;
 };
 
 function MobileHeader(props: MobileHeaderProps) {
-  const router = useRouter();
   return (
     <HStack
       className="py-6 px-4 border-b border-border-50 bg-background-0 items-center"
       space="md"
     >
-      <Pressable
-        onPress={() => {
-          router.back();
-        }}
-      >
-        <Icon as={ChevronLeftIcon} />
-      </Pressable>
+      <HeaderBackButton />
       <Text className="text-xl">{props.title}</Text>
     </HStack>
   );

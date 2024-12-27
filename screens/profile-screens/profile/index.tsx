@@ -1,6 +1,6 @@
 /*
 GLUESTACK PROFILE TEMPLATE
-*/ 
+*/
 import React, { useRef, useState } from "react";
 import { Box } from "@/components/ui/box";
 import { HStack } from "@/components/ui/hstack";
@@ -20,7 +20,8 @@ import { Pressable } from "@/components/ui/pressable";
 import { AlertCircle, type LucideIcon } from "lucide-react-native";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
-import Image from "image-expo";
+// import { Image } from "expo-image";
+import { Image } from "@/components/ui/image";
 import { ScrollView } from "@/components/ui/scroll-view";
 import {
   Modal,
@@ -31,11 +32,7 @@ import {
   ModalHeader,
 } from "@/components/ui/modal";
 import { Input, InputField } from "@/components/ui/input";
-import {
-  Avatar,
-  AvatarBadge,
-  AvatarImage,
-} from "@/components/ui/avatar";
+import { Avatar, AvatarBadge, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "expo-router";
 import { ProfileIcon } from "./assets/icons/profile";
 import { SafeAreaView } from "@/components/ui/safe-area-view";
@@ -76,6 +73,9 @@ import {
 import { CameraSparklesIcon } from "./assets/icons/camera-sparkles";
 import { EditPhotoIcon } from "./assets/icons/edit-photo";
 import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
+import WebHeader from "@/components/WebHeader";
+import MobileHeader from "@/components/MobileHeader";
+import MobileFooter from "@/components/MobileFooter";
 
 type MobileHeaderProps = {
   title: string;
@@ -344,7 +344,7 @@ const userSchema = z.object({
 interface AccountCardType {
   iconName: LucideIcon | typeof Icon;
   subText: string;
-  endIcon: LucideIcon | typeof Icon;
+  endIcon: LucideIcon | typeof Icon | any; //TODO: fix this typing later
 }
 const accountData: AccountCardType[] = [
   {
@@ -380,10 +380,10 @@ const MainContent = () => {
           <Box className="relative w-full md:h-[478px] h-[380px]">
             <Image
               source={require("@/assets/profile-screens/profile/image2.png")}
-              height={"100%"}
-              width={"100%"}
+              height={100}
+              width={100}
               alt="Banner Image"
-              contentFit="cover"
+              // contentFit="cover"//TODO: fix this prop typing error later
             />
           </Box>
           <HStack className="absolute pt-6 px-10 hidden md:flex">
@@ -474,8 +474,8 @@ const MainContent = () => {
                 <Box className="md:h-20 md:w-20 h-10 w-10">
                   <Image
                     source={require("@/assets/profile-screens/profile/image1.png")}
-                    height={"100%"}
-                    width={"100%"}
+                    height={100}
+                    width={100}
                     alt="Promo Image"
                   />
                 </Box>
@@ -573,8 +573,8 @@ const MobileScreen = () => {
       <Box className="w-full h-[188px]">
         <Image
           source={require("@/assets/profile-screens/profile/image2.png")}
-          height={"100%"}
-          width={"100%"}
+          height={100}
+          width={100}
           alt="Banner Image"
         />
       </Box>
@@ -1017,8 +1017,8 @@ const ModalComponent = ({
         <Box className={"w-full h-[215px] "}>
           <Image
             source={require("@/assets/profile-screens/profile/image2.png")}
-            height={"100%"}
-            width={"100%"}
+            height={100}
+            width={100}
             alt="Banner Image"
           />
         </Box>

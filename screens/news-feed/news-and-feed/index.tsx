@@ -16,15 +16,14 @@ import { Heading } from "@/components/ui/heading";
 import { Image } from "expo-image";
 import { ScrollView } from "@/components/ui/scroll-view";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
-import {
-  Avatar,
-  AvatarFallbackText,
-} from "@/components/ui/avatar";
+import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "@/components/ui/safe-area-view";
-import  MobileFooter  from "@/components/MobileFooter";
+import MobileFooter from "@/components/MobileFooter";
 import WebHeader from "@/components/WebHeader.js";
-
+import { Sidebar } from "@/components/Sidebar";
+import { bottomTabsList } from "@/components/BottomTabs";
+import  MobileHeader  from "@/components/MobileHeader";
 interface BlogData {
   bannerUri: string;
   title: string;
@@ -144,24 +143,6 @@ const DashboardLayout = (props: any) => {
   );
 };
 
-function MobileHeader(props: MobileHeaderProps) {
-  const router = useRouter();
-  return (
-    <HStack
-      className="py-6 px-4 border-b border-border-300 bg-background-0 items-center"
-      space="md"
-    >
-      <Pressable
-        onPress={() => {
-          router.back();
-        }}
-      >
-        <Icon as={ChevronLeftIcon} />
-      </Pressable>
-      <Text className="text-xl">{props.title}</Text>
-    </HStack>
-  );
-}
 
 const MainContent = () => {
   return (
@@ -195,8 +176,8 @@ const MainContent = () => {
                 >
                   <Box className="w-full h-64 rounded">
                     <Image
-                      height={"100%"}
-                      width={"100%"}
+                      height="100%"
+                      width="100%"
                       source={item.bannerUri}
                       alt={item.bannerUri}
                       contentFit="cover"

@@ -9,6 +9,7 @@ import { GlobeIcon } from "../assets/icons/globe";
 import { HomeIcon } from "../assets/icons/home";
 import { HeartIcon } from "../assets/icons/heart";
 import { ProfileIcon } from "../assets/icons/profile";
+
 type Icons = {
   iconName: LucideIcon | typeof LCNIcon;
   iconText?: string;
@@ -18,17 +19,8 @@ type SidebarProps = {
   iconList: Icons[];
 
   className?: string;
+  onPressHandler?: () => void; //handler function for the sidebar icon eg. go home
 };
-
-export function Sidebar({ iconList, className }: SidebarProps) {
-  return (
-    <div className={className}>
-      {iconList.map((icon, index) => (
-        <Icon key={index} {...icon} />
-      ))}
-    </div>
-  );
-}
 
 const SideBarContentList: Icons[] = [
   {
@@ -53,17 +45,24 @@ const SideBarContentList: Icons[] = [
   },
 ];
 
-const Sidebar = (iconList: Icons[] = SideBarContentList) => {
+const Sidebar = ({
+  iconList = SideBarContentList,
+  className = "w-14 pt-5 h-full items-center border-r border-border-300",
+  onPressHandler,
+}: SidebarProps) => {
   const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const handlePress = (index: number) => {
     setSelectedIndex(index);
     // router.push("/dashboard/dashboard-layout");
+    onPressHandler && onPressHandler();
   };
 
   return (
     <VStack
-      className="w-14 pt-5 h-full items-center border-r border-border-300"
+      className={
+        className ?? "w-14 pt-5 h-full items-center border-r border-border-300"
+      }
       space="xl"
     >
       {iconList.map((item, index) => {
