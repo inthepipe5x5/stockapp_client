@@ -1,16 +1,10 @@
-/*
-FROM GLUESTACK STARTER KIT
-SOURCE: AUTH/SIGNIN
-https://github.com/gluestack/gluestack-ui-starter-kits/blob/main/expo-app/screens/auth/signin/index.tsx
- */
 import React, { useState } from "react";
 import { Toast, ToastTitle, useToast } from "@/components/ui/toast";
 import { HStack } from "@/components/ui/hstack";
 import { VStack } from "@/components/ui/vstack";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import { LinkText } from "@/components/ui/link";
-import Link from "link-expo";
+import { Link, LinkText } from "@/components/ui/link";
 import {
   FormControl,
   FormControlError,
@@ -21,96 +15,95 @@ import {
 } from "@/components/ui/form-control";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
 import {
-  Checkbox,
-  CheckboxIcon,
-  CheckboxIndicator,
-  CheckboxLabel,
-} from "@/components/ui/checkbox";
-import {
   ArrowLeftIcon,
-  CheckIcon,
   EyeIcon,
   EyeOffIcon,
   Icon,
 } from "@/components/ui/icon";
 import { Button, ButtonText, ButtonIcon } from "@/components/ui/button";
-import { Keyboard } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertTriangle } from "lucide-react-native";
-import { GoogleIcon } from "./assets/icons/google";
+import { GoogleIcon } from "../../../assets/icons/google";
 import { Pressable } from "@/components/ui/pressable";
 import { useRouter } from "expo-router";
 import { AuthLayout } from "../layout";
 import { loginSchema, LoginSchemaType } from "@/lib/schemas/authSchemas";
-import supabase from "@/services/supabase";
+import { useUserSession } from "../../../contexts/userSessionProvider";
 
 const LoginWithLeftBackground = () => {
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<LoginSchemaType>({
+  const { control, handleSubmit, reset, formState } = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
   });
   const toast = useToast();
+  const { errors } = formState;
+
   const [validated, setValidated] = useState({
     emailValid: true,
     passwordValid: true,
   });
 
-  const onSubmit = async (data: LoginSchemaType) => {
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.signInWithPassword(data); //TODO: Replace API call with useLogin hook in userSessionContext
-    if (error) {
-      //handle error
+  const router = useRouter();
+  const { signIn } = useUserSession();
 
+  // Password-based login handler
+  const handlePasswordLogin = async (data: LoginSchemaType) => {
+    try {
+      const credentials = { email: data.email, password: data.password };
+      await signIn(credentials); // Use the context function
+      toast.show({
+        placement: "bottom right",
+        render: ({ id }) => (
+          <Toast nativeID={id} variant="solid" action="success">
+            <ToastTitle>Logged in successfully!</ToastTitle>
+          </Toast>
+        ),
+      });
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Login error:", error);
       setValidated({ emailValid: true, passwordValid: false });
       toast.show({
         placement: "bottom right",
-        render: ({ id }) => {
-          return (
-            <Toast nativeID={id} variant="solid" action="error">
-              <ToastTitle>"Invalid login credentials"</ToastTitle>
-            </Toast>
-          );
-        },
+        render: ({ id }) => (
+          <Toast nativeID={id} variant="solid" action="error">
+            <ToastTitle>"Invalid login credentials"</ToastTitle>
+          </Toast>
+        ),
       });
-    }
-    //handle successful login
-    else {
-      setValidated({ emailValid: true, passwordValid: true });
-      toast.show({
-        placement: "bottom right",
-        render: ({ id }) => {
-          return (
-            <Toast nativeID={id} variant="solid" action="success">
-              <ToastTitle>Logged in successfully!</ToastTitle>
-            </Toast>
-          );
-        },
-      });
-      router.push("/dashboard"); //redirect to dashboard
     }
     reset();
   };
 
+  // OAuth Login handler
+  const handleOAuthLogin = async (provider: string) => {
+    try {
+      await signIn({ oauthProvider: provider });
+      toast.show({
+        placement: "bottom right",
+        render: ({ id }) => (
+          <Toast nativeID={id} variant="solid" action="success">
+            <ToastTitle>Signed in with {provider}</ToastTitle>
+          </Toast>
+        ),
+      });
+      router.push("/dashboard");
+    } catch (error) {
+      console.error(`OAuth login failed for ${provider}:`, error);
+      toast.show({
+        placement: "bottom right",
+        render: ({ id }) => (
+          <Toast nativeID={id} variant="solid" action="error">
+            <ToastTitle>OAuth login failed for {provider}</ToastTitle>
+          </Toast>
+        ),
+      });
+    }
+  };
+
   const [showPassword, setShowPassword] = useState(false);
+  const handleState = () => setShowPassword((prev) => !prev);
 
-  const handleState = () => {
-    setShowPassword((showState) => {
-      return !showState;
-    });
-  };
-  const handleKeyPress = () => {
-    Keyboard.dismiss();
-    handleSubmit(onSubmit)();
-  };
-
-  const router = useRouter();
   return (
     <VStack className="max-w-[440px] w-full" space="md">
       <VStack className="md:items-center" space="md">
@@ -129,7 +122,7 @@ const LoginWithLeftBackground = () => {
           <Heading className="md:text-center" size="3xl">
             Log in
           </Heading>
-          <Text>Login to start using gluestack</Text>
+          <Text>Login to start using your app</Text>
         </VStack>
       </VStack>
       <VStack className="w-full">
@@ -145,16 +138,6 @@ const LoginWithLeftBackground = () => {
               defaultValue=""
               name="email"
               control={control}
-              rules={{
-                validate: async (value) => {
-                  try {
-                    await loginSchema.parseAsync({ email: value });
-                    return true;
-                  } catch (error: any) {
-                    return error.message;
-                  }
-                },
-              }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input>
                   <InputField
@@ -162,7 +145,7 @@ const LoginWithLeftBackground = () => {
                     value={value}
                     onChangeText={onChange}
                     onBlur={onBlur}
-                    onSubmitEditing={handleKeyPress}
+                    onSubmitEditing={handleSubmit(handlePasswordLogin)}
                     returnKeyType="done"
                   />
                 </Input>
@@ -176,7 +159,7 @@ const LoginWithLeftBackground = () => {
               </FormControlErrorText>
             </FormControlError>
           </FormControl>
-          {/* Label Message */}
+          {/* Password Field */}
           <FormControl
             isInvalid={!!errors.password || !validated.passwordValid}
             className="w-full"
@@ -188,16 +171,6 @@ const LoginWithLeftBackground = () => {
               defaultValue=""
               name="password"
               control={control}
-              rules={{
-                validate: async (value) => {
-                  try {
-                    await loginSchema.parseAsync({ password: value });
-                    return true;
-                  } catch (error: any) {
-                    return error.message;
-                  }
-                },
-              }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input>
                   <InputField
@@ -206,7 +179,6 @@ const LoginWithLeftBackground = () => {
                     value={value}
                     onChangeText={onChange}
                     onBlur={onBlur}
-                    onSubmitEditing={handleKeyPress}
                     returnKeyType="done"
                   />
                   <InputSlot onPress={handleState} className="pr-3">
@@ -223,42 +195,20 @@ const LoginWithLeftBackground = () => {
               </FormControlErrorText>
             </FormControlError>
           </FormControl>
-          <HStack className="w-full justify-between ">
-            <Controller
-              name="rememberme"
-              defaultValue={false}
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <Checkbox
-                  size="sm"
-                  value="Remember me"
-                  isChecked={value}
-                  onChange={onChange}
-                  aria-label="Remember me"
-                >
-                  <CheckboxIndicator>
-                    <CheckboxIcon as={CheckIcon} />
-                  </CheckboxIndicator>
-                  <CheckboxLabel>Remember me</CheckboxLabel>
-                </Checkbox>
-              )}
-            />
-            <Link href="/auth/forgot-password">
-              <LinkText className="font-medium text-sm text-primary-700 group-hover/link:text-primary-600">
-                Forgot Password?
-              </LinkText>
-            </Link>
-          </HStack>
         </VStack>
+        {/* Login & OAuth Buttons */}
         <VStack className="w-full my-7 " space="lg">
-          <Button className="w-full" onPress={handleSubmit(onSubmit)}>
+          <Button
+            className="w-full"
+            onPress={handleSubmit(handlePasswordLogin)}
+          >
             <ButtonText className="font-medium">Log in</ButtonText>
           </Button>
           <Button
             variant="outline"
             action="secondary"
             className="w-full gap-1"
-            onPress={() => {}}
+            onPress={() => handleOAuthLogin("google")}
           >
             <ButtonText className="font-medium">
               Continue with Google
@@ -270,7 +220,7 @@ const LoginWithLeftBackground = () => {
           <Text size="md">Don't have an account?</Text>
           <Link href="/auth/signup">
             <LinkText
-              className="font-medium text-primary-700 group-hover/link:text-primary-600  group-hover/pressed:text-primary-700"
+              className="font-medium text-primary-700 group-hover/link:text-primary-600"
               size="md"
             >
               Sign up

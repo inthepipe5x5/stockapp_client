@@ -7,15 +7,15 @@ import Animated, {
   useScrollViewOffset,
 } from "react-native-reanimated";
 import { Box } from "@gluestack-ui/themed"; // Gluestack components
-import MobileHeader from "../components/MobileHeader.jsx";
-import MobileFooter from "../components/MobileFooter.jsx";
+import MobileHeader from "../components/MobileHeader";
+import MobileFooter from "../components/MobileFooter";
 import { Sidebar, Icons, SideBarContentList } from "../components/Sidebar";
 import { useColorScheme } from "../hooks/useColorScheme";
 import { viewPort } from "../constants/dimensions.js";
-import { bottomTabsList, BottomTabs } from "../components/BottomTabs.jsx";
+import { bottomTabsList, BottomTabs } from "../components/BottomTabs";
 
 const HEADER_HEIGHT = viewPort?.header?.height ?? 250;
-
+ 
 type Props = PropsWithChildren<{
   headerComponent?: ReactElement; // Allow flexibility for passing custom headers
   headerBackgroundColor: { dark: string; light: string };

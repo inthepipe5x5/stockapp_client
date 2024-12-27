@@ -1,4 +1,4 @@
-import { GoogleIcon } from "../screens/auth/signin/assets/icons";
+import { GoogleIcon } from "../assets/icons/google/index.tsx";
 import { Apple } from "lucide-react-native";
 import { Email } from "lucide-react-native";
 
@@ -7,7 +7,7 @@ const authProviders = Object.freeze({
   SOCIAL: {
     GOOGLE: { slug: "google", name: "Google", icon: GoogleIcon },
     APPLE: { slug: "apple", name: "Apple", icon: Apple },
-    FACEBOOK: { slug: "facebook", name: "Facebook", icon: Facebook },
+    FACEBOOK: { slug: "facebook", name: "Facebook" /*icon: Facebook*/ },
   },
 });
 
@@ -44,11 +44,9 @@ class AuthProviderMapper {
 
     const providersArray = flattenProviders(this.providerEnum);
 
-    if (asObj) {
-      return providersArray;
-    }
-
-    return providersArray.map((provider) => provider.slug);
+    return asObj
+      ? providersArray
+      : providersArray.map((provider) => provider?.slug);
   }
 }
 
