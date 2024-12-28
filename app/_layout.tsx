@@ -8,11 +8,9 @@ import { StatusBar } from "expo-status-bar";
 import { useTheme } from "@gluestack-ui/themed";
 
 import StackNavigator from "../components/navigation/StackNavigator.jsx";
-// import ErrorWrapper from "../components/errors/ErrorWrapper.jsx";
-// import { globalErrorHandler } from "../lib/globalErrorHandler.js";
-// import FallbackComponent from "../components/errors/FallbackComponent.jsx";
 import { Platform } from "react-native";
 import { UserSessionProvider } from "../contexts/userSessionProvider";
+import { ThemeProvider } from "../contexts/ThemeContext";
 import {
   QueryClient,
   QueryClientProvider,
@@ -40,28 +38,16 @@ export default function RootLayout() {
     return null;
   }
 
-  //TODO: FIX THIS LATER - ErrorWrapper is not working as expected
-  // const WrappedApp = ErrorWrapper(
-  //   () => (
-  //     <GluestackUIProvider mode={theme.colors.mode}>
-  //       <StackNavigator />
-  //       <StatusBar style="auto" />
-  //     </GluestackUIProvider>
-  //   ),
-  //   FallbackComponent,
-  //   globalErrorHandler
-  // );
-
-  // return <WrappedApp />;
-
   return (
     <QueryClientProvider client={queryClient}>
-      <UserSessionProvider>
-        <GluestackUIProvider mode={theme?.colors?.mode ?? "system"}>
-          <StackNavigator />
-          <StatusBar style="auto" />
-        </GluestackUIProvider>
-      </UserSessionProvider>
+      <ThemeProvider>
+        <UserSessionProvider>
+          <GluestackUIProvider mode={theme?.colors?.mode ?? "system"}>
+            <StackNavigator />
+            <StatusBar style="auto" />
+          </GluestackUIProvider>
+        </UserSessionProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
