@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { useCallback } from "react";
 import { supabase } from "../services/supabase";
 
-export const useSupabaseQuery = (
+const useSupabaseQuery = (
   table,
   schema,
   filters = {},
@@ -37,3 +37,5 @@ export const useSupabaseQuery = (
 
   return useQuery([table, filters, limit], fetchData);
 };
+
+export default useSupabaseQuery
