@@ -1,13 +1,14 @@
 import { GoogleIcon } from "../assets/icons/google/index.tsx";
 import { Apple } from "lucide-react-native";
 import { Email } from "lucide-react-native";
+import { Facebook } from "../assets/icons/facebook/facebook";
 
 const authProviders = Object.freeze({
   EMAIL: { slug: "email", name: "email", icon: Email }, //for users who use magic link via email
   SOCIAL: {
     GOOGLE: { slug: "google", name: "Google", icon: GoogleIcon },
     APPLE: { slug: "apple", name: "Apple", icon: Apple },
-    FACEBOOK: { slug: "facebook", name: "Facebook" /*icon: Facebook*/ },
+    FACEBOOK: { slug: "facebook", name: "Facebook", icon: Facebook },
   },
 });
 

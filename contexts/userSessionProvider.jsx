@@ -147,7 +147,7 @@ const sessionReducer = (state, action) => {
 * NOTE: storing the entire user session for simplicity.
 */
 async function storeUserSession(sessionObj) {
-  if (Platform.OS === "web") {
+  if (typeof window !== "undefined" && Platform.OS === "web") {
     document.cookie = `${appName}_session=${JSON.stringify(
       sessionObj
     )}; path=/;`;
@@ -171,7 +171,7 @@ async function storeUserSession(sessionObj) {
 const fetchSession = async () => {
   try {
     let storedSession;
-    if (Platform.OS === "web") {
+    if (typeof window !== "undefined" && Platform.OS === "web") {
       const cookies = document.cookie.split("; ");
       const sessionCookie = cookies.find((cookie) =>
         cookie.startsWith(`${appName}_session=`)
@@ -222,7 +222,7 @@ const fetchSession = async () => {
 };
 
 /** ---------------------------
- *  Sign In Logic (v1 or v2)
+ *  Sign In Logic (v1.2)
  *  ---------------------------
  *  Adjust for your version of
  *  Supabase auth methods.
@@ -289,7 +289,7 @@ async function signOut(dispatch) {
  *  ---------------------------
  */
 const UserSessionContext = createContext({
-  state: initialSession(),
+  state: defaultSession,
   dispatch: () => {},
   signIn: (credentials) => {}, // accepts credentials for OAuth or password-based login
   signOut: () => {},
