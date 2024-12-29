@@ -20,16 +20,19 @@ const createCustomStorage = () => {
   };
 };
 
-const supabaseUrl = process.env.REACT_NATIVE_SUPABASE_URL ?? "SUPABASE URL";
-const supabaseAnonKey =
-  process.env.REACT_NATIVE_SUPABASE_ANON_KEY ?? "SUPABASE ANON KEY";
+const supabaseUrl = process.env.REACT_NATIVE_SUPABASE_URL ?? "SUPABASE_URL";
+const supabaseAnonKey = process.env.REACT_NATIVE_SUPABASE_ANON_KEY ?? "SUPABASE_ANON_KEY";
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error("Missing Supabase URL or Anon Key");
+}
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     storage: Platform.OS === "web" ? createCustomStorage() : SecureStore,
     autoRefreshToken: true,
     persistSession: true,
-    detectSessionInUrl: false,
+    detectSessionInUrl: false, // Prevents Supabase from evaluating window.location.href, breaking mobile
   },
 });
 
