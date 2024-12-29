@@ -4,10 +4,11 @@ import React, {
   useReducer,
   useEffect,
   useCallback,
-  useState,
 } from "react";
 import * as SecureStore from "expo-secure-store";
 import { router } from "expo-router";
+import { Platform } from "react-native";
+
 import supabase from "../services/supabase";
 import defaultUserPreferences from "../constants/userPreferences";
 import { useThemeContext } from "./ThemeContext";
@@ -46,16 +47,7 @@ const defaultSession = {
  */
 
 const ensureSessionNotExpired = (sessionData) => {
-  //guard clauses
-  if (!sessionData || sessionData === null) false;
-  /**
-   * The function `findExpiryDate` recursively searches for and returns the expiry date value from a
-   * nested object based on specific key names.
-   * @returns The `findExpiryDate` function is designed to search for an expiry date property within a
-   * nested object. It returns the value of the first encountered key that matches one of the specified
-   * keys related to expiry dates ("expires_at", "expiresAt", "expiry", "expiry_date", "expiryDate").
-   * If no matching key is found at any level of nesting, it returns `null`.
-   */
+  if (!sessionData || sessionData === null) return false;
 
   const findExpiryDate = (obj) => {
     if (typeof obj !== "object" || obj === null) return null;
@@ -83,25 +75,18 @@ const ensureSessionNotExpired = (sessionData) => {
     return null;
   };
 
-  const expiry = findExpiryDate(sessionData); /*
-  !isExpired(expiry) : false;` in the
-  `ensureSessionNotExpired` function is checking if the
-  `expiry` value is either falsy or `null`. If it is,
-  then it returns the result of `!isExpired(expiry)`,
-  which implies that the session is not expired. If the
-  `expiry` value is not falsy or `null`, then it simply
-  returns `false`, indicating that the session is
-  expired. */
+  const expiry = findExpiryDate(sessionData);
   return !expiry || expiry === null ? !isExpired(expiry) : false;
 };
 
 const fetchProfile = async (user_id) => {
   try {
-    const { data, error } = useSupabaseQuery(
-      "profiles", //table
-      { user_id }, //filters
-      1 //limit
-    );
+    const { data, error } = await supabase
+      .from("profiles")
+      .select()
+      .eq("user_id", user_id)
+      .limit(1);
+
     if (!data || data === null || error)
       throw new Error("Error fetching user profile");
     else {
@@ -156,16 +141,22 @@ const sessionReducer = (state, action) => {
 /** ---------------------------
  *  Helper: Storing the session
  *  ---------------------------
-*  Stores the user session in the secure store.
+*  Stores the user session in the secure store if mobile else as a cookie if a web browser.
 *  @param {Object} sessionObj - The session object to store. 
   
 * NOTE: storing the entire user session for simplicity.
 */
 async function storeUserSession(sessionObj) {
-  await SecureStore.setItemAsync(
-    `${appName}_session`,
-    JSON.stringify(sessionObj)
-  );
+  if (Platform.OS === "web") {
+    document.cookie = `${appName}_session=${JSON.stringify(
+      sessionObj
+    )}; path=/;`;
+  } else {
+    await SecureStore.setItemAsync(
+      `${appName}_session`,
+      JSON.stringify(sessionObj)
+    );
+  }
 }
 
 /** ---------------------------
@@ -179,15 +170,23 @@ async function storeUserSession(sessionObj) {
  */
 const fetchSession = async () => {
   try {
-    // Try to get session from SecureStore
-    const storedSession = await SecureStore.getItemAsync(`${appName}_session`);
+    let storedSession;
+    if (Platform.OS === "web") {
+      const cookies = document.cookie.split("; ");
+      const sessionCookie = cookies.find((cookie) =>
+        cookie.startsWith(`${appName}_session=`)
+      );
+      if (sessionCookie) {
+        storedSession = sessionCookie.split("=")[1];
+      }
+    } else {
+      storedSession = await SecureStore.getItemAsync(`${appName}_session`);
+    }
 
     if (storedSession) {
       const parsedSession = JSON.parse(storedSession);
 
-      // Check if session is expired
       if (ensureSessionNotExpired(parsedSession)) {
-        // Fetch user profile and return the session with user data
         const userProfile = await fetchProfile(parsedSession.user.id);
         return {
           ...parsedSession,
@@ -198,7 +197,6 @@ const fetchSession = async () => {
       }
     }
 
-    // If no stored session or expired, check with Supabase
     const { data, error } = await supabase.auth.getSession();
 
     if (error || !data?.session || !ensureSessionNotExpired(data.session)) {
@@ -206,17 +204,12 @@ const fetchSession = async () => {
       return defaultSession;
     }
 
-    // Store new session securely
-    await SecureStore.setItemAsync(
-      `${appName}_session`,
-      JSON.stringify({
-        token: data.session.access_token,
-        refreshToken: data.session.refresh_token,
-        user: data.session.user,
-      })
-    );
+    await storeUserSession({
+      token: data.session.access_token,
+      refreshToken: data.session.refresh_token,
+      user: data.session.user,
+    });
 
-    // Fetch user profile and return session with user data
     const userProfile = await fetchProfile(data.session.user.id);
     return {
       ...data.session,
@@ -328,14 +321,15 @@ export const UserSessionProvider = ({ children }) => {
         //update themeContext
         updatePreferences(profile.preferences);
       }
+      return { session: session ?? null, user: profile ?? null };
     };
-    initialize();
+    const { session: storedSession, profile } = initialize();
 
     const { data: subscription } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      (event, session = storedSession) => {
         if (["SIGNED_IN", "TOKEN_REFRESHED", "USER_UPDATED"].includes(event)) {
           dispatch({ type: actionTypes.SET_SESSION, payload: session });
-          if (session?.user?.preferences) {
+          if (profile) {
             updatePreferences(session.user.preferences);
           }
         } else if (event === "SIGNED_OUT") {
