@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Stack } from "expo-router";
 import WebFooter from "../WebFooter";
 import WebHeader from "../WebHeader";
@@ -28,6 +28,10 @@ const dynamicElements = {
 };
 
 const StackNavigator = () => {
+  useEffect(() => {
+    console.log("Navigating to:", Platform.OS);
+  }, []);
+
   return (
     <Stack>
       <Stack.Screen // root home route
