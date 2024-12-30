@@ -30,21 +30,21 @@ const dynamicElements = {
 const StackNavigator = () => {
   return (
     <Stack>
-      <Stack.Screen //root home route
-        name="/"
+      <Stack.Screen // root home route
+        name="index.jsx"
         options={dynamicElements}
       />
-      <Stack.Screen //parallax scroll anon user landing page
-        name="/features"
+      <Stack.Screen // parallax scroll anon user landing page
+        name="features"
         options={dynamicElements}
       />
-      <Stack.Screen name="(tabs)" options={dynamicElements} />
-      <Stack.Screen name="(auth)" options={dynamicElements} />
+      <Stack.Screen name="(auth)/index" options={dynamicElements} />
       <Stack.Screen name="(auth)/signin" options={dynamicElements} />
       <Stack.Screen name="(auth)/signup" options={dynamicElements} />
-      <Stack.Screen name="(dashboard)" options={dynamicElements} />
-      <Stack.Screen name="(scan)" options={dynamicElements} />
-      <Stack.Screen name="+not-found" />
+      <Stack.Screen name="(dashboard)/index" options={dynamicElements} />
+      <Stack.Screen name="(scan)/index" options={dynamicElements} />
+      <Stack.Screen name="(profile)/index" options={dynamicElements} />
+      <Stack.Screen name="+not-found" options={dynamicElements} />
     </Stack>
   );
 };
