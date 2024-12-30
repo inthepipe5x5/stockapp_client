@@ -35,7 +35,7 @@ const StackNavigator = () => {
   return (
     <Stack>
       <Stack.Screen // root home route
-        name="index.jsx"
+        name="index"
         options={dynamicElements}
       />
       <Stack.Screen // parallax scroll anon user landing page
