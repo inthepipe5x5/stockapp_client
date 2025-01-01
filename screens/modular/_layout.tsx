@@ -7,7 +7,7 @@ import { StyleSheet, Platform } from "react-native";
 import { Fab } from "@/components/ui/fab";
 import { Pressable } from "@/components/ui/pressable";
 import { StatusBar } from "expo-status-bar";
-//TODO: remove this context 
+//TODO: remove this context
 export const ColorModeContext = React.createContext({});
 
 const CustomBackButton = () => {

@@ -13,42 +13,59 @@ import MobileHeader from "../MobileHeader";
 
 const dynamicElements = {
   header: (props) =>
-    Platform.OS === "web" ? (
-      <WebHeader {...props} />
-    ) : (
-      <MobileHeader {...props} />
-    ),
+    props.showHeader ? (
+      Platform.OS === "web" ? (
+        <WebHeader {...props} />
+      ) : (
+        <MobileHeader {...props} />
+      )
+    ) : null,
   footer: (props) =>
-    Platform.OS === "web" ? (
-      <WebFooter {...props} />
-    ) : (
-      <MobileFooter {...props} />
-    ),
-  sidebar: (props) => (Platform.OS === "web" ? <Sidebar {...props} /> : null),
+    props.showFooter ? (
+      Platform.OS === "web" ? (
+        <WebFooter {...props} />
+      ) : (
+        <MobileFooter {...props} />
+      )
+    ) : null,
+  sidebar: (props) =>
+    Platform.OS === "web" || props.showSidebar ? <Sidebar {...props} /> : null, //show side if web browser or indicated in the route
+};
+const defaultRouteProps = {
+  ...dynamicElements,
+  showHeader: true,
+  showFooter: true,
+  showSidebar: false,
 };
 
-const StackNavigator = () => {
-  useEffect(() => {
-    console.log("Navigating to:", Platform.OS);
-  }, []);
 
+//render only the footer icons
+//eg. for (auth) routes
+const footerOnly = {
+  ...dynamicElements,
+  showHeader: true,
+  showFooter: false,
+  showSidebar: false,
+}
+
+const StackNavigator = () => {
   return (
     <Stack>
       <Stack.Screen // root home route
         name="index"
-        options={dynamicElements}
+        options={defaultRouteProps}
       />
       <Stack.Screen // parallax scroll anon user landing page
         name="features"
-        options={dynamicElements}
+        options={defaultRouteProps}
       />
-      <Stack.Screen name="(auth)/index" options={dynamicElements} />
-      <Stack.Screen name="(auth)/signin" options={dynamicElements} />
-      <Stack.Screen name="(auth)/signup" options={dynamicElements} />
-      <Stack.Screen name="(dashboard)/index" options={dynamicElements} />
-      <Stack.Screen name="(scan)/index" options={dynamicElements} />
-      <Stack.Screen name="(profile)/index" options={dynamicElements} />
-      <Stack.Screen name="+not-found" options={dynamicElements} />
+      <Stack.Screen name="(auth)/index" options={footerOnly} />
+      <Stack.Screen name="(auth)/signin" options={footerOnly} />
+      <Stack.Screen name="(auth)/signup" options={footerOnly} />
+      <Stack.Screen name="(dashboard)/index" options={defaultRouteProps} />
+      <Stack.Screen name="(scan)/index" options={defaultRouteProps} />
+      <Stack.Screen name="(profile)/index" options={defaultRouteProps} />
+      <Stack.Screen name="+not-found" options={defaultRouteProps} />
     </Stack>
   );
 };
