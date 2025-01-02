@@ -103,7 +103,7 @@ const ScanView = ({ scanCallback, mutateCallBack, mutationOutcomes, ...props }) 
             {result?.title ?? result?.name ?? result?.product ?? "Unknown Item"}
           </ToastTitle>
           <ToastDescription>Confirm Product</ToastDescription>
-          <HStack space={2}>
+          <HStack space={1}>
             <Button
               action="positive"
               isFocused={true}

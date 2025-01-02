@@ -6,11 +6,12 @@ import {
   Icon,
   ButtonGroup,
   Center,
-  Link,
   Spinner,
-  Text,
   FlatList,
   Box,
+  Toast,
+  ToastTitle,
+  ToastDescription,
 } from "@gluestack-ui/themed";
 import { SearchBar } from "@gluestack-ui/search";
 import { SearchIcon } from "@gluestack-ui/icons";
@@ -53,15 +54,19 @@ const SearchScreen = ({ onSearch = {}, title, ...props }) => {
    */
   const { data, error, isLoading } = useQuery(
     ["search", searchQuery, searchCategory],
-    () => {
+    async () => {
       const searchFn = onSearch[searchCategory];
       if (!searchFn) {
         console.warn(`No search function defined for category: ${searchCategory}`);
-        return Promise.resolve([]);
+        return [];
       }
-      return searchFn(searchQuery);
+      return await searchFn(searchQuery);
     },
-    { enabled: !!searchQuery }
+    {
+      enabled: !!searchQuery, // Only execute if there's a query
+      staleTime: 500, // Debounce-like behavior; avoids frequent queries
+      keepPreviousData: true, // Retain the previous data while loading new results
+    }
   );
 
   /**
@@ -131,9 +136,12 @@ const SearchScreen = ({ onSearch = {}, title, ...props }) => {
 
       {/* Error State */}
       {error && (
-        <Text color="$red500">
-          Error: {error.message || "Something went wrong. Please try again."}
-        </Text>
+        <Toast variant="error">
+          <ToastTitle>Error</ToastTitle>
+          <ToastDescription>
+            {error.message || "Something went wrong. Please try again."}
+          </ToastDescription>
+        </Toast>
       )}
 
       {/* Search Results */}
