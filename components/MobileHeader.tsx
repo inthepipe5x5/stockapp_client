@@ -1,4 +1,4 @@
-import { Text, Pressable } from "@gluestack-ui/themed";
+import { Text } from "@gluestack-ui/themed";
 import { HStack } from "./ui/hstack";
 import HeaderBackButton from "./navigation/HeaderBackButton";
 
