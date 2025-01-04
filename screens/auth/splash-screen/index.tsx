@@ -8,8 +8,7 @@ import {
 import { useColorScheme } from "nativewind";
 
 import { useRouter } from "expo-router";
-import { AuthLayout } from "../layout";
-
+import { AuthLayout } from "@/screens/auth/layout/index";
 const SplashScreenWithLeftBackground = () => {
   const router = useRouter();
   const { colorScheme } = useColorScheme();
@@ -27,14 +26,14 @@ const SplashScreenWithLeftBackground = () => {
         <Button
           className="w-full"
           onPress={() => {
-            router.push({ pathname: "/auth/signin" });
+            router.push({ pathname: "(auth)/signin" });
           }}
         >
           <ButtonText className="font-medium">Log in</ButtonText>
         </Button>
         <Button
           onPress={() => {
-            router.push({ pathname: "/auth/signup" });
+            router.push({ pathname: "(auth)/signup" });
           }}
         >
           <ButtonText className="font-medium">Sign Up</ButtonText>
