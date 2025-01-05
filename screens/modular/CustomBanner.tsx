@@ -15,7 +15,8 @@ import { Heading } from "@/components/ui/heading";
 import { ChevronRightIcon, Icon } from "@/components/ui/icon";
 import AppIcon from "@/components/AppIcon";
 import { useRouter } from "expo-router";
-
+import { useWindowDimensions } from "react-native";
+import PropTypes from "prop-types";
 cssInterop(SafeAreaView, { className: "style" });
 cssInterop(ExpoImage, { className: "style" });
 
@@ -24,6 +25,16 @@ cssInterop(ExpoImage, { className: "style" });
  *
  * @returns a Banner Component
  */
+
+CustomBanner.propTypes = {
+  info: PropTypes.string,
+  headerTitle: PropTypes.string,
+  description: PropTypes.string,
+  bannerImage: PropTypes.shape({
+    light: PropTypes.string,
+    dark: PropTypes.string,
+  }),
+};
 
 const CustomBanner = (props) => {
   const { colorMode }: any = useContext(ColorModeContext);
@@ -38,7 +49,11 @@ const CustomBanner = (props) => {
         >
           <AppIcon
             alt="logo_image"
-            className="h-5 w-5 rounded-sm lg:h-6 lg:w-6 xl:h-7 xl:w-7"
+            width={24} //h-5 is roughly 20px, h-7 is roughly 28px => 24px for consistency
+            height={24} //w-5 is roughly 20px, w-7 is roughly 28px => 24px for consistency
+            className="rounded-sm" 
+            // className="h-5 w-5 rounded-sm lg:h-6 lg:w-6 xl:h-7 xl:w-7"
+
           />
           <Text className="font-medium text-sm lg:text-base xl:text-lg text-typography-900">
             {props.info ? props.info : "Powered by gluestack-ui v2"}
@@ -58,8 +73,8 @@ const CustomBanner = (props) => {
           source={{
             uri:
               colorMode === "light"
-                ? "https://i.imgur.com/sxY9qxx.png"
-                : "https://i.imgur.com/icZHMep.png",
+                ? props.bannerImage.light ?? "https://i.imgur.com/sxY9qxx.png"
+                : props.bannerImage.dark ?? "https://i.imgur.com/icZHMep.png",
           }}
           alt="CustomBanner_image"
           className="flex-1"

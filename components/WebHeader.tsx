@@ -1,9 +1,8 @@
 import { HStack, Text, Pressable } from "@gluestack-ui/themed";
-import {
-  Avatar,
-  AvatarFallbackText,
-} from "@/components/ui/avatar";
 import { Icon, MenuIcon } from "@/components/ui/icon";
+import HeaderAppIcon from "./navigation/HeaderAppIcon";
+import UserMenu from "./navigation/UserMenu";
+import useThemeContext from "@/contexts/useThemeContext";
 
 type HeaderProps = {
   title: string;
@@ -11,8 +10,9 @@ type HeaderProps = {
 };
 
 function WebHeader(props: HeaderProps) {
+  const { theme } = useThemeContext();
   return (
-    <HStack className="pt-4  pr-10 pb-3 bg-background-0 items-center justify-between border-b border-border-300">
+    <HStack className="pt-4 pr-10 pb-3 bg-background-0 items-center justify-between border-b border-border-300">
       <HStack className="items-center">
         <Pressable
           onPress={() => {
@@ -23,10 +23,8 @@ function WebHeader(props: HeaderProps) {
         </Pressable>
         <Text className="text-2xl">{props.title}</Text>
       </HStack>
-
-      <Avatar className="h-9 w-9">
-        <AvatarFallbackText className="font-light">A</AvatarFallbackText>
-      </Avatar>
+      <HeaderAppIcon width={50} height={50} theme={theme} />
+      <UserMenu />
     </HStack>
   );
 }
