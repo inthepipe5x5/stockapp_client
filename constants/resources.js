@@ -1,7 +1,7 @@
 // Description: Constants for db table names as resources and their relationships
-import { irregularWordObj, pluralizeString, singularizeString } from "../utils/pluralizeStr.js";
+import { pluralizeString, singularizeString } from "../utils/pluralizeStr.js";
 import { convertSnakeToCamel } from "../utils/caseConverter.js";
-
+import { ShoppingBasket, Home, Group, ListTodoIcon } from "lucide-react-native";
 //name should match the route name AND the db table name\
 //joint_resources is an array of resources that are joined to this resource or this resource is joined to
 //for example, households are joined to user_households
@@ -109,8 +109,20 @@ resources.forEach((resource) => {
   }
 });
 
+const resourceIconMap = [
+  { label: "Households", value: "user_households", icon: Home },
+  { label: "Inventories", value: "inventories", icon: Group },
+  { label: "Products", value: "products", icon: ShoppingBasket },
+  {
+    label: "Household Members",
+    value: "user_households",
+    icon: UserSearchIcon,
+  },
+  { label: "Tasks", value: "tasks", icon: ListTodoIcon },
+];
+
 const resourcesMap = new Map();
 
-export { resourcesMap };
+export { resourcesMap, resourceIconMap };
 
 export default resources;

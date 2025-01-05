@@ -8,7 +8,6 @@ import { StatusBar } from "expo-status-bar";
 import { useTheme } from "@gluestack-ui/themed";
 
 import TabsNavigator from "../components/navigation/TabsNavigator.jsx";
-import { Platform } from "react-native";
 import { UserSessionProvider } from "../contexts/userSessionProvider";
 import { ThemeProvider } from "../contexts/ThemeContext";
 import {

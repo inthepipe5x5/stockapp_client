@@ -6,11 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useTheme } from "@gluestack-ui/themed";
 import { UserSessionProvider } from "../contexts/userSessionProvider";
 import { ThemeProvider } from "../contexts/ThemeContext";
-import StackNavigator from "../components/navigation/StackNavigator.jsx";
+import TabsNavigator from "../components/navigation/TabsNavigator.jsx";
 import { StatusBar } from "expo-status-bar";
-
-// Web-specific components or utilities
-import { BrowserRouter } from "react-router-dom"; // Replace router logic with React Router
 
 export default function RootLayoutWeb() {
   const queryClient = new QueryClient();
@@ -36,9 +33,7 @@ export default function RootLayoutWeb() {
       <ThemeProvider>
         <UserSessionProvider>
           <GluestackUIProvider mode={theme?.colors?.mode ?? "light"}>
-            <BrowserRouter>
-              <StackNavigator />
-            </BrowserRouter>
+            <TabsNavigator />
             <StatusBar style="auto" />
           </GluestackUIProvider>
         </UserSessionProvider>
