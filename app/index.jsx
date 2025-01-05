@@ -22,7 +22,7 @@ const RootPage = () => {
         <Button
           className="primary"
           variant="outline"
-          onPress={() => router.push("/(auth)/")}
+          onPress={() => router.push("/(auth)/index")}
         >
           <ButtonIcon as={LinkIcon} />
         </Button>

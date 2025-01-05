@@ -1,7 +1,8 @@
 // app/(stacks)/_layout.jsx
 import { Stack } from "expo-router";
+import ProtectedNavigation from "@/components/navigation/ProtectedNavigation";
 
-export default function StacksNavigator() {
+function StacksNavigator() {
   return (
     <Stack>
       <Stack.Screen
@@ -14,7 +15,10 @@ export default function StacksNavigator() {
       />
       <Stack.Screen name="[type].[id].edit" options={{ headerTitle: "Edit" }} />
       <Stack.Screen name="[type].[id].children" />
-      <Stack.Screen name="[type].[id].new" options={{ headerTitle: "Add New" }}/>
+      <Stack.Screen
+        name="[type].[id].new"
+        options={{ headerTitle: "Add New" }}
+      />
       <Stack.Screen
         name="[type].[id].new"
         options={{ headerTitle: "Create New" }}
@@ -27,3 +31,6 @@ export default function StacksNavigator() {
     </Stack>
   );
 }
+
+//protect the route 
+export default ProtectedNavigation(StacksNavigator);

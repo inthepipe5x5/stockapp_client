@@ -1,6 +1,16 @@
 import type { LucideIcon } from "lucide-react-native";
-import { Icon, Inbox, HouseIcon, BoxIcon, Key, UserPlus2Icon, ScanSearchIcon } from "lucide-react-native";
+import {
+  Icon,
+  Inbox,
+  HouseIcon,
+  BoxIcon,
+  Key,
+  UserPlus2Icon,
+  ScanSearchIcon,
+} from "lucide-react-native";
+//custom icons
 import { HomeIcon } from "../assets/icons/home";
+import { ProfileIcon } from "../assets/icons/profile";
 
 type BottomTabs = {
   iconName: LucideIcon | typeof Icon;
@@ -41,7 +51,7 @@ const anonBottomTabsList: BottomTabs[] = [
   {
     iconName: HomeIcon,
     iconText: "Home",
-    route: "/",
+    route: "/features",
   },
   {
     iconName: Key,
@@ -57,6 +67,6 @@ const anonBottomTabsList: BottomTabs[] = [
     iconName: ScanSearchIcon, // users can scan a QR code to sign in or sign up
     iconText: "Scan",
     route: "(auth)/scan",
-  }
-]
+  },
+];
 export { bottomTabsList, anonBottomTabsList, BottomTabs };

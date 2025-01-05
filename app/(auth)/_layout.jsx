@@ -1,27 +1,32 @@
-import { Tabs } from "expo-router";
+import { Stack } from "expo-router";
 import { AuthLayout } from "../../screens/auth/layout";
 
 /**
  * AuthStack component renders the stack of authentication-related screens.
  *
- * This component uses a Tabs navigator to manage the navigation between
- * different authentication screens such as index, signin, signup, and
- * forgot-password.
+ * This component uses a Stack navigator to manage navigation between
+ * authentication screens such as index, signin, signup, and forgot-password.
  *
  * @returns {JSX.Element} The stack navigator with authentication screens.
  */
 const AuthStack = () => {
   return (
-    <Tabs>
-      <Tabs.Screen name="index" />
-      <Tabs.Screen name="signin" />
-      <Tabs.Screen name="signup" />
-      <Tabs.Screen name="forgot-password" />
-    </Tabs>
+    <Stack>
+      <Stack.Screen name="index" options={{ headerTitle: "Welcome" }} />
+      <Stack.Screen name="signin" options={{ headerTitle: "Sign In" }} />
+      <Stack.Screen name="signup" options={{ headerTitle: "Sign Up" }} />
+      <Stack.Screen
+        name="forgot-password"
+        options={{ headerTitle: "Forgot Password" }}
+      />
+    </Stack>
   );
 };
 
 export default function AuthStackLayout() {
-  return <AuthLayout props={AuthStack} />;
+  return (
+    <AuthLayout>
+      <AuthStack />
+    </AuthLayout>
+  );
 }
-a;

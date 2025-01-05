@@ -6,9 +6,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useTheme } from "@gluestack-ui/themed";
 import { UserSessionProvider } from "../contexts/userSessionProvider";
 import { ThemeProvider } from "../contexts/ThemeContext";
-import TabsNavigator from "../components/navigation/TabsNavigator.jsx";
+import TopLevelNavigator from "../components/navigation/TopLevelNavigator.jsx";
 import { StatusBar } from "expo-status-bar";
-
+import { Router } from "expo-router";
 export default function RootLayoutWeb() {
   const queryClient = new QueryClient();
 
@@ -33,7 +33,9 @@ export default function RootLayoutWeb() {
       <ThemeProvider>
         <UserSessionProvider>
           <GluestackUIProvider mode={theme?.colors?.mode ?? "light"}>
-            <TabsNavigator />
+            <Router>
+              <TopLevelNavigator />
+            </Router>
             <StatusBar style="auto" />
           </GluestackUIProvider>
         </UserSessionProvider>

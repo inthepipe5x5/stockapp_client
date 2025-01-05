@@ -7,7 +7,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useTheme } from "@gluestack-ui/themed";
 
-import TabsNavigator from "../components/navigation/TabsNavigator.jsx";
+import TopLevelNavigator from "../components/navigation/TopLevelNavigator";
 import { UserSessionProvider } from "../contexts/userSessionProvider";
 import { ThemeProvider } from "../contexts/ThemeContext";
 import {
@@ -45,7 +45,7 @@ export default function RootLayout() {
         <UserSessionProvider>
           <GluestackUIProvider mode={theme?.colors?.mode ?? "system"}>
             {/* Top-level navigation */}
-            <TabsNavigator />
+            <TopLevelNavigator />
             <StatusBar style="auto" />
           </GluestackUIProvider>
         </UserSessionProvider>
