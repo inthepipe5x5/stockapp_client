@@ -16,8 +16,8 @@ const ProtectedNavigation = (WrappedComponent) => {
       }
     }, [state.user]);
 
-    if (!state.user || state.user === null) {
-      return <Redirect replace to="(auth)/index" />;
+    if (!state || !state === null || !state.user || state.user === null) {
+      return <Redirect replace to="/(auth)/index" />;
     }
 
     return <WrappedComponent {...props} />;

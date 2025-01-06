@@ -23,10 +23,12 @@ const AuthStack = () => {
   );
 };
 
-export default function AuthStackLayout() {
-  return (
-    <AuthLayout>
-      <AuthStack />
-    </AuthLayout>
-  );
-}
+export default AuthStack;
+
+// export default function AuthStackLayout() {
+//   return (
+//     <AuthLayout>
+//       <AuthStack />
+//     </AuthLayout>
+//   );
+// }
