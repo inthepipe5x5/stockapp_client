@@ -23,14 +23,16 @@ import MobileFooter from "@/components/MobileFooter";
 import WebHeader from "@/components/WebHeader.js";
 import { Sidebar } from "@/components/Sidebar";
 import { bottomTabsList } from "@/components/BottomTabs";
-import  MobileHeader  from "@/components/MobileHeader";
+import MobileHeader from "@/components/MobileHeader";
+import DashboardLayout from "@/screens/_layout";
+
 interface BlogData {
   bannerUri: string;
   title: string;
   description: string;
   publishedDate: string;
 }
-interface CreatorData {
+interface MemberData {
   bannerUri: string;
   name: string;
   description: string;
@@ -96,7 +98,7 @@ const BLOGS_DATA: BlogData[] = [
     publishedDate: "May 15, 2023",
   },
 ];
-const CREATORS_DATA: CreatorData[] = [
+const MEMBERS_DATA: MemberData[] = [
   {
     bannerUri: require("@/assets/news-feed/news-and-feed/image6.png"),
     name: "Emily Zho",
@@ -110,39 +112,9 @@ const CREATORS_DATA: CreatorData[] = [
   {
     bannerUri: require("@/assets/news-feed/news-and-feed/image8.png"),
     name: "David John",
-    description: "Creator of all things metal, talks about music and art. ",
+    description: "Member of all things metal, talks about music and art. ",
   },
 ];
-
-//DashboardLayout component - used in dashboard screens, newsfeed screens, profile screens
-const DashboardLayout = (props: any) => {
-  const [isSidebarVisible, setIsSidebarVisible] = useState(
-    props.isSidebarVisible
-  );
-  function toggleSidebar() {
-    setIsSidebarVisible(!isSidebarVisible);
-  }
-
-  return (
-    <VStack className="h-full w-full bg-background-0">
-      <Box className="md:hidden">
-        <MobileHeader title={"News feed"} />
-      </Box>
-      <Box className="hidden md:flex">
-        <WebHeader toggleSidebar={toggleSidebar} title={props.title} />
-      </Box>
-      <VStack className="h-full w-full">
-        <HStack className="h-full w-full">
-          <Box className="hidden md:flex h-full">
-            {isSidebarVisible && <Sidebar />}
-          </Box>
-          <VStack className="w-full">{props.children}</VStack>
-        </HStack>
-      </VStack>
-    </VStack>
-  );
-};
-
 
 const MainContent = () => {
   return (
@@ -150,12 +122,13 @@ const MainContent = () => {
       className="p-4 pb-0 md:px-10 md:pt-6 md:pb-0 h-full w-full max-w-[1500px] self-center  mb-20 md:mb-2"
       space="2xl"
     >
-      <Input className="text-center md:hidden border-border-100">
+      {//TODO: add a search bar later
+      /* <Input className="text-center md:hidden border-border-100">
         <InputField placeholder="Search" />
         <InputSlot className="pr-3">
           <InputIcon as={SearchIcon} />
         </InputSlot>
-      </Input>
+      </Input> */}
       <Heading size="2xl" className="font-roboto">
         What's new?
       </Heading>
@@ -236,7 +209,7 @@ const MainContent = () => {
               <VStack space="lg" className="mt-7">
                 <Heading size="lg">Find creators</Heading>
                 <VStack className="h-full" space="md">
-                  {CREATORS_DATA.map((item, index) => {
+                  {MEMBERS_DATA.map((item, index) => {
                     return (
                       <HStack
                         className="p-4 items-center h-full border border-border-300 rounded-xl"
@@ -283,11 +256,8 @@ const MainContent = () => {
 
 export const NewsAndFeed = () => {
   return (
-    <SafeAreaView className="h-full w-full">
-      <DashboardLayout title="News Feed" isSidebarVisible={true}>
-        <MainContent />
-      </DashboardLayout>
-      <MobileFooter footerIcons={bottomTabsList} />
-    </SafeAreaView>
+    <DashboardLayout title="News Feed" isSidebarVisible={true}>
+      <MainContent />
+    </DashboardLayout>
   );
 };

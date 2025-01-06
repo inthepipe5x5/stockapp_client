@@ -73,18 +73,8 @@ import {
 import { CameraSparklesIcon } from "./assets/icons/camera-sparkles";
 import { EditPhotoIcon } from "./assets/icons/edit-photo";
 import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
-import WebHeader from "@/components/WebHeader";
-import MobileHeader from "@/components/MobileHeader";
 import MobileFooter from "@/components/MobileFooter";
-
-type MobileHeaderProps = {
-  title: string;
-};
-
-type HeaderProps = {
-  title: string;
-  toggleSidebar: () => void;
-};
+import DashboardLayout from "@/screens/_layout";
 
 type Icons = {
   iconName: LucideIcon | typeof Icon;
@@ -273,34 +263,6 @@ const Sidebar = () => {
         </VStack>
       </VStack>
     </ScrollView>
-  );
-};
-
-const DashboardLayout = (props: any) => {
-  const [isSidebarVisible, setIsSidebarVisible] = useState(
-    props.isSidebarVisible
-  );
-  function toggleSidebar() {
-    setIsSidebarVisible(!isSidebarVisible);
-  }
-
-  return (
-    <VStack className="h-full w-full bg-background-0">
-      <Box className="md:hidden">
-        <MobileHeader title={props.title} />
-      </Box>
-      <Box className="hidden md:flex">
-        <WebHeader toggleSidebar={toggleSidebar} title={props.title} />
-      </Box>
-      <VStack className="h-full w-full">
-        <HStack className="h-full w-full">
-          <Box className="hidden md:flex h-full">
-            {isSidebarVisible && <Sidebar />}
-          </Box>
-          <VStack className="w-full flex-1">{props.children}</VStack>
-        </HStack>
-      </VStack>
-    </VStack>
   );
 };
 
@@ -1447,13 +1409,11 @@ const ModalComponent = ({
     </Modal>
   );
 };
+
 export const Profile = () => {
   return (
-    <SafeAreaView className="h-full w-full">
-      <DashboardLayout title="Company Name" isSidebarVisible={true}>
-        <MainContent />
-      </DashboardLayout>
-      <MobileFooter footerIcons={bottomTabsList} />
-    </SafeAreaView>
+    <DashboardLayout title="Profile" isSidebarVisible={true}>
+      <MainContent />
+    </DashboardLayout>
   );
 };

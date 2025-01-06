@@ -1,30 +1,19 @@
 import { Box } from "@/components/ui/box";
 import { HStack } from "@/components/ui/hstack";
 import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
-import { ChevronLeftIcon, Icon, MenuIcon } from "@/components/ui/icon";
+import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { Pressable } from "@/components/ui/pressable";
 
 import { Button, ButtonText } from "@/components/ui/button";
-import { useState } from "react";
 import { Heading } from "@/components/ui/heading";
 import { ScrollView } from "@/components/ui/scroll-view";
 import { Divider } from "@/components/ui/divider";
 import { Grid, GridItem } from "@/components/ui/grid";
-import {
-  Avatar,
-  AvatarFallbackText,
-  AvatarImage,
-} from "@/components/ui/avatar";
-import MobileFooter from "@/components/MobileFooter";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { CalendarIcon } from "./assets/icons/calendar";
 import { SafeAreaView } from "@/components/ui/safe-area-view";
-import { bottomTabsList } from "@/components/BottomTabs";
-
-
-
-
+import DashboardLayout from "@/screens/_layout";
 interface CardData {
   bannerUri: string;
   title: string;
@@ -144,36 +133,6 @@ const ColleaguesCards: ColleaguesCardData[] = [
     position: "CEO Marketing",
   },
 ];
-
-
-const DashboardLayout = (props: any) => {
-  const [isSidebarVisible, setIsSidebarVisible] = useState(
-    props.isSidebarVisible
-  );
-  function toggleSidebar() {
-    setIsSidebarVisible(!isSidebarVisible);
-  }
-  return (
-    <VStack className="h-full w-full bg-background-0">
-      <Box className="md:hidden">
-        <MobileHeader title={props.title} />
-      </Box>
-      <Box className="hidden md:flex">
-        <WebHeader toggleSidebar={toggleSidebar} title={props.title} />
-      </Box>
-      <VStack className="h-full w-full">
-        <HStack className="h-full w-full">
-          <Box className="hidden md:flex h-full">
-            {isSidebarVisible && <Sidebar />}
-          </Box>
-          <VStack className="w-full">{props.children}</VStack>
-        </HStack>
-      </VStack>
-    </VStack>
-  );
-};
-
-
 const MainContent = () => {
   return (
     <Box className="flex-1 ">
@@ -431,7 +390,7 @@ export const Dashboard = () => {
       <DashboardLayout title="Dashboard" isSidebarVisible={true}>
         <MainContent />
       </DashboardLayout>
-      <MobileFooter footerIcons={bottomTabsList} />
+      {/* <MobileFooter footerIcons={bottomTabsList} /> */}
     </SafeAreaView>
   );
 };

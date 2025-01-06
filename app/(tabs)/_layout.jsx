@@ -18,6 +18,7 @@ function RootTabLayout() {
         name="(profile)/index"
         options={{ tabBarLabel: "Profile" }}
       />
+      <Tabs.Screen name="/(inbox)/index" />
     </Tabs>
   );
 }
