@@ -10,10 +10,8 @@ import { useTheme } from "@gluestack-ui/themed";
 import TopLevelNavigator from "../components/navigation/TopLevelNavigator";
 import { UserSessionProvider } from "../contexts/userSessionProvider";
 import { ThemeProvider } from "../contexts/ThemeContext";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Stack } from "expo-router";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -45,7 +43,11 @@ export default function RootLayout() {
         <UserSessionProvider>
           <GluestackUIProvider mode={theme?.colors?.mode ?? "system"}>
             {/* Top-level navigation */}
-            <TopLevelNavigator />
+            {/* <TopLevelNavigator /> */}
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
             <StatusBar style="auto" />
           </GluestackUIProvider>
         </UserSessionProvider>

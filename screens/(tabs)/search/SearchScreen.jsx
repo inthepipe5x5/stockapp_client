@@ -25,7 +25,7 @@ import { ListFilter, ScanBarcode, ShoppingBasket } from "lucide-react-native";
 import { useWindowDimensions } from "react-native";
 import { router } from "expo-router";
 import { Check, CheckCheck } from "lucide";
-import { resourceIconMap as filters } from "../../constants/resources";
+import { resourceIconMap as filters } from "../../../constants/resources";
 // Default search category
 const defaultCategory = {
   label: "All",

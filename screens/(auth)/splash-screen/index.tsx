@@ -8,7 +8,7 @@ import {
 import { useColorScheme } from "nativewind";
 
 import { useRouter } from "expo-router";
-import { AuthLayout } from "@/screens/auth/layout/index";
+import { AuthLayout } from "@/screens/(auth)/layout/index";
 
 const SplashScreenWithLeftBackground = () => {
   const router = useRouter();

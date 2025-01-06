@@ -1,29 +1,15 @@
 import { Box } from "@/components/ui/box";
 import { HStack } from "@/components/ui/hstack";
-import {
-  ChevronLeftIcon,
-  DownloadIcon,
-  Icon,
-  SearchIcon,
-} from "@/components/ui/icon";
+import { DownloadIcon, SearchIcon } from "@/components/ui/icon";
 import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { Pressable } from "@/components/ui/pressable";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
-import { useState } from "react";
 import { Heading } from "@/components/ui/heading";
 import { Image } from "expo-image";
 import { ScrollView } from "@/components/ui/scroll-view";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
 import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
-import { useRouter } from "expo-router";
-import { SafeAreaView } from "@/components/ui/safe-area-view";
-import MobileFooter from "@/components/MobileFooter";
-import WebHeader from "@/components/WebHeader.js";
-import { Sidebar } from "@/components/Sidebar";
-import { bottomTabsList } from "@/components/BottomTabs";
-import MobileHeader from "@/components/MobileHeader";
 import DashboardLayout from "@/screens/_layout";
 
 interface BlogData {
@@ -122,13 +108,15 @@ const MainContent = () => {
       className="p-4 pb-0 md:px-10 md:pt-6 md:pb-0 h-full w-full max-w-[1500px] self-center  mb-20 md:mb-2"
       space="2xl"
     >
-      {//TODO: add a search bar later
-      /* <Input className="text-center md:hidden border-border-100">
+      {
+        //TODO: add a search bar later
+        /* <Input className="text-center md:hidden border-border-100">
         <InputField placeholder="Search" />
         <InputSlot className="pr-3">
           <InputIcon as={SearchIcon} />
         </InputSlot>
-      </Input> */}
+      </Input> */
+      }
       <Heading size="2xl" className="font-roboto">
         What's new?
       </Heading>
@@ -149,8 +137,7 @@ const MainContent = () => {
                 >
                   <Box className="w-full h-64 rounded">
                     <Image
-                      height="100%"
-                      width="100%"
+                      style={{ height: "100%", width: "100%" }}
                       source={item.bannerUri}
                       alt={item.bannerUri}
                       contentFit="cover"
@@ -187,8 +174,7 @@ const MainContent = () => {
                       >
                         <Box className="relative h-full w-40 rounded">
                           <Image
-                            height={"100%"}
-                            width={"100%"}
+                            style={{ height: "100%", width: "100%" }}
                             contentFit="cover"
                             source={item.bannerUri}
                             alt={item.title}
@@ -219,7 +205,7 @@ const MainContent = () => {
                         <Avatar>
                           <Avatar>
                             <AvatarFallbackText>
-                              {item.name?.[0] ?? "U"}
+                              {item.name?.[0] ?? "User Name"}
                             </AvatarFallbackText>
                           </Avatar>
                         </Avatar>

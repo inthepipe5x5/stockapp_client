@@ -12,8 +12,9 @@ import { Divider } from "@/components/ui/divider";
 import { Grid, GridItem } from "@/components/ui/grid";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { CalendarIcon } from "./assets/icons/calendar";
-import { SafeAreaView } from "@/components/ui/safe-area-view";
 import DashboardLayout from "@/screens/_layout";
+import { cn } from "@gluestack-ui/nativewind-utils/cn";
+
 interface CardData {
   bannerUri: string;
   title: string;
@@ -386,11 +387,8 @@ const MainContent = () => {
 
 export const Dashboard = () => {
   return (
-    <SafeAreaView className="h-full w-full">
-      <DashboardLayout title="Dashboard" isSidebarVisible={true}>
-        <MainContent />
-      </DashboardLayout>
-      {/* <MobileFooter footerIcons={bottomTabsList} /> */}
-    </SafeAreaView>
+    <DashboardLayout title="Dashboard" isSidebarVisible={true}>
+      <MainContent />
+    </DashboardLayout>
   );
 };
