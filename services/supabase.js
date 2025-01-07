@@ -1,9 +1,9 @@
-import "../env"
+// import "../env"
 import { AppState, Platform } from "react-native";
 import "react-native-url-polyfill/auto";
 import { createClient } from "@supabase/supabase-js";
 import * as SecureStore from "expo-secure-store";
-import { configDotenv } from "dotenv";
+// import { configDotenv } from "dotenv";
 
 const createCustomStorage = () => {
   if (typeof window !== "undefined" && window.localStorage) {
@@ -22,9 +22,9 @@ const createCustomStorage = () => {
   };
 };
 
-const supabaseUrl = process.env.REACT_NATIVE_SUPABASE_URL ?? "SUPABASE_URL";
+const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL ?? "SUPABASE_URL";
 const supabaseAnonKey =
-  process.env.REACT_NATIVE_SUPABASE_ANON_KEY ?? "SUPABASE_ANON_KEY";
+  process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? "SUPABASE_ANON_KEY";
 
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error(

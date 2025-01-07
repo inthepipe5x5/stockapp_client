@@ -8,7 +8,7 @@ import { UserSessionProvider } from "../contexts/userSessionProvider";
 import { ThemeProvider } from "../contexts/ThemeContext";
 import TopLevelNavigator from "../components/navigation/TopLevelNavigator.jsx";
 import { StatusBar } from "expo-status-bar";
-import { Router } from "expo-router";
+import { Router, Tabs } from "expo-router";
 export default function RootLayoutWeb() {
   const queryClient = new QueryClient();
 
@@ -33,9 +33,10 @@ export default function RootLayoutWeb() {
       <ThemeProvider>
         <UserSessionProvider>
           <GluestackUIProvider mode={theme?.colors?.mode ?? "light"}>
-            <Router>
-              <TopLevelNavigator />
-            </Router>
+            <TopLevelNavigator />
+            <Tabs>
+              <Tabs.Screen name="index" />
+            </Tabs>
             <StatusBar style="auto" />
           </GluestackUIProvider>
         </UserSessionProvider>
