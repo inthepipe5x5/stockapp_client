@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { AuthLayout } from "../../screens/auth/layout";
+// import { AuthLayout } from "@/screens/(auth)/layout";
 
 /**
  * AuthStack component renders the stack of authentication-related screens.

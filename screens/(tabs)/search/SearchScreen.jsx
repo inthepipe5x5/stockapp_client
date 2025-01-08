@@ -88,17 +88,24 @@ const SearchScreen = ({ searchFunctionsObject = {}, title, ...props }) => {
       {/* Search Input and Filters */}
       <Center>
         <FormControl>
-          <Input>
+          <Input className="text-center md:hidden border-border-100">
             <InputField
               placeholder="Search"
               value={searchQuery}
               onChangeText={setSearchQuery}
             />
-            <InputIcon as={ListFilter} />
+            {/* <InputSlot className="pr-3">
+              <InputIcon as={ListFilter} />
+            </InputSlot> */}
           </Input>
         </FormControl>
         <ButtonGroup>
-          <Button onPress={handleSearch} action="primary" variant="solid">
+          <Button
+            onPress={handleSearch}
+            action="primary"
+            variant="solid"
+            iconRight={<Icon as={SearchIcon} />}
+          >
             Search
           </Button>
           <Button

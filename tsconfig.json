@@ -3,9 +3,12 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "strict": true,
+    "baseUrl": "./",
+
     "paths": {
       "@/*": ["./*"],
-      "tailwind.config": ["./tailwind.config.js"]
+      "tailwind.config": ["./tailwind.config.js"],
+      "nativewind": ["./node_modules/nativewind/dist/index.d.ts"],
     }
   },
   "include": [
@@ -14,6 +17,8 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "app/index.jsx",
-    "nativewind-env.d.ts"
-  ]
+    "nativewind-env.d.ts",
+    "node_modules/@gluestack-ui/themed-components/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
 }

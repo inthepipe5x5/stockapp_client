@@ -4,25 +4,17 @@ import { DownloadIcon, SearchIcon } from "@/components/ui/icon";
 import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Image } from "expo-image";
 import { ScrollView } from "@/components/ui/scroll-view";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
 import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
 import DashboardLayout from "@/screens/_layout";
+import UpcomingEvents from "./UpcomingEvents";
+import MemberActionCards from "./MemberActionCards";
+import BlogCards from "./BlogCards";
 
-interface BlogData {
-  bannerUri: string;
-  title: string;
-  description: string;
-  publishedDate: string;
-}
-interface MemberData {
-  bannerUri: string;
-  name: string;
-  description: string;
-}
+
 
 const WORLD_DATA: BlogData[] = [
   {
@@ -129,28 +121,7 @@ const MainContent = () => {
           showsVerticalScrollIndicator={false}
         >
           <VStack className="w-full" space="2xl">
-            {BLOGS_DATA.map((item, index) => {
-              return (
-                <VStack
-                  className="rounded-xl border border-border-300 p-5"
-                  key={index}
-                >
-                  <Box className="w-full h-64 rounded">
-                    <Image
-                      style={{ height: "100%", width: "100%" }}
-                      source={item.bannerUri}
-                      alt={item.bannerUri}
-                      contentFit="cover"
-                    />
-                  </Box>
-                  <VStack className="mt-4" space="md">
-                    <Text className="text-sm">{item.publishedDate}</Text>
-                    <Heading size="md">{item.title}</Heading>
-                    <Text className="line-clamp-2">{item.description}</Text>
-                  </VStack>
-                </VStack>
-              );
-            })}
+            {BlogCards(BLOGS_DATA)}
           </VStack>
         </ScrollView>
         <VStack className="max-w-[500px] hidden lg:flex" space="2xl">
@@ -162,74 +133,16 @@ const MainContent = () => {
           </Input>
           <VStack>
             <ScrollView showsVerticalScrollIndicator={false} className="gap-7">
-              <VStack space="lg">
+              <VStack space="md">
                 <Heading size="lg">From around the world</Heading>
                 <VStack className="h-full" space="md">
-                  {WORLD_DATA.map((item, index) => {
-                    return (
-                      <HStack
-                        className="p-3 items-center h-full border border-border-300 rounded-xl"
-                        space="lg"
-                        key={index}
-                      >
-                        <Box className="relative h-full w-40 rounded">
-                          <Image
-                            style={{ height: "100%", width: "100%" }}
-                            contentFit="cover"
-                            source={item.bannerUri}
-                            alt={item.title}
-                          />
-                        </Box>
-                        <VStack className="justify-between h-full" space="md">
-                          <Text className="text-sm">{item.publishedDate}</Text>
-                          <Heading size="md">{item.title}</Heading>
-                          <Text className="line-clamp-2">
-                            {item.description}
-                          </Text>
-                        </VStack>
-                      </HStack>
-                    );
-                  })}
+                  {UpcomingEvents(WORLD_DATA)}
                 </VStack>
               </VStack>
-              <VStack space="lg" className="mt-7">
+              <VStack space="md" className="mt-5">
                 <Heading size="lg">Find creators</Heading>
                 <VStack className="h-full" space="md">
-                  {MEMBERS_DATA.map((item, index) => {
-                    return (
-                      <HStack
-                        className="p-4 items-center h-full border border-border-300 rounded-xl"
-                        space="lg"
-                        key={index}
-                      >
-                        <Avatar>
-                          <Avatar>
-                            <AvatarFallbackText>
-                              {item.name?.[0] ?? "User Name"}
-                            </AvatarFallbackText>
-                          </Avatar>
-                        </Avatar>
-                        <Button
-                          variant="outline"
-                          action="secondary"
-                          className="p-2"
-                        >
-                          <ButtonIcon as={DownloadIcon} />
-                        </Button>
-                        <VStack>
-                          <Text className="font-semibold text-typography-900">
-                            {item.name}
-                          </Text>
-                          <Text className="line-clamp-1 text-sm">
-                            {item.description}
-                          </Text>
-                        </VStack>
-                        <Button action="secondary" variant="outline">
-                          <ButtonText>Follow</ButtonText>
-                        </Button>
-                      </HStack>
-                    );
-                  })}
+                  {MemberActionCards(MEMBERS_DATA)}
                 </VStack>
               </VStack>
             </ScrollView>

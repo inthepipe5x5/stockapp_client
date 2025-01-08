@@ -1,3 +1,3 @@
-import * as DashboardScreen from "../../../screens/news-feed/news-and-feed/index" 
+import { Dashboard } from "../@/screens/(tabs)/dashboard/index";
 //this is the wrong screen possibly TODO: fix this later
-export default DashboardScreen;
+export default Dashboard;

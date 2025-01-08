@@ -1,4 +1,4 @@
-import SearchStackLayout from "@/screens/search/_layout";
+import SearchStackLayout from "@/screens/(tabs)/search/_layout";
 
-return () => <SearchStackLayout />;
+export default () => <SearchStackLayout />;
 

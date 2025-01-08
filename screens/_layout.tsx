@@ -11,9 +11,15 @@ import { Sidebar, SideBarContentList } from "@/components/Sidebar";
 import { useRouter } from "expo-router";
 import { Platform } from "react-native";
 
+type DashboardLayoutProps = {
+  title: string;
+  isSidebarVisible?: boolean;
+  children?: React.ReactNode;
+};
+
 //DashboardLayout component - main content layout used in dashboard screens, newsfeed screens, profile screens
 //This layout has a sidebar, header and children components
-const DashboardLayout = (props: any) => {
+const DashboardLayout = (props: DashboardLayoutProps) => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(
     props.isSidebarVisible || false
   );

@@ -9,9 +9,9 @@ module.exports = function (api) {
           root: ["./"],
           alias: {
             "@": "./", //root directory
-            "@components": "./components",
-            "@screens": "./screens",
-            "@gsui": "@gluestack-ui",
+            // "@components": "./components",
+            // "@screens": "./screens",
+            // "@gsui": "@gluestack-ui",
             "tailwind.config": "./tailwind.config.js",
           },
         },

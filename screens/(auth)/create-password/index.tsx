@@ -1,7 +1,7 @@
 /*
 GLUESTACK PROFILE TEMPLATE
 SOURCE: gluestack starter kit 
-https://github.com/gluestack/gluestack-ui-starter-kits/blob/main/expo-app/screens/auth/create-password/index.tsx
+https://github.com/gluestack/gluestack-ui-starter-kits/blob/main/expo-app/screens/(auth)/create-password/index.tsx
 */ 
 import { useState } from "react";
 import { Toast, ToastTitle, useToast } from "@/components/ui/toast";
