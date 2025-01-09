@@ -14,8 +14,7 @@ import defaultUserPreferences from "../constants/userPreferences";
 import { useThemeContext } from "./ThemeContext";
 import useSupabaseQuery from "../hooks/useSupabase";
 import isExpired from "../utils/isExpired";
-
-const appName = "stock_app";
+import { appName } from "@/constants/appName";
 
 const defaultSession = {
   user: null,

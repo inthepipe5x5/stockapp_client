@@ -8,6 +8,7 @@ import React, {
 import { useColorScheme } from "@/hooks/useColorScheme";
 import Colors from "@/constants/Colors";
 import * as SecureStore from "expo-secure-store";
+import { appName } from "@/constants/appName";
 
 const ThemeContext = createContext();
 //theme context for app styling
