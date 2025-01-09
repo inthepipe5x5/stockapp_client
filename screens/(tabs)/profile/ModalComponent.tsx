@@ -1,25 +1,19 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Box } from "@/components/ui/box";
 import { HStack } from "@/components/ui/hstack";
 import {
   AlertCircleIcon,
   ChevronDownIcon,
-  ChevronRightIcon,
   CloseIcon,
-  EditIcon,
   Icon,
-  PhoneIcon,
-  SettingsIcon,
 } from "@/components/ui/icon";
-import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { Pressable } from "@/components/ui/pressable";
-import { AlertCircle, type LucideIcon } from "lucide-react-native";
-import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
+import { AlertCircle } from "lucide-react-native";
+import { Button, ButtonText } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 // import { Image } from "expo-image";
 import { Image } from "@/components/ui/image";
-import { ScrollView } from "@/components/ui/scroll-view";
 import {
   Modal,
   ModalBackdrop,
@@ -30,23 +24,10 @@ import {
 } from "@/components/ui/modal";
 import { Input, InputField } from "@/components/ui/input";
 import { Avatar, AvatarBadge, AvatarImage } from "@/components/ui/avatar";
-import { useRouter } from "expo-router";
-import { ProfileIcon } from "./assets/icons/profile";
-import { SafeAreaView } from "@/components/ui/safe-area-view";
 import { Center } from "@/components/ui/center";
 import { Keyboard } from "react-native";
-import { SubscriptionIcon } from "./assets/icons/subscription";
-import { DownloadIcon } from "./assets/icons/download";
-import { FaqIcon } from "./assets/icons/faq";
-import { NewsBlogIcon } from "./assets/icons/news-blog";
-import { HomeIcon } from "./assets/icons/home";
-import { GlobeIcon } from "./assets/icons/globe";
-import { InboxIcon } from "./assets/icons/inbox";
-import { HeartIcon } from "./assets/icons/heart";
-import { Divider } from "@/components/ui/divider";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import {
   FormControl,
   FormControlError,
@@ -69,10 +50,7 @@ import {
 } from "@/components/ui/select";
 import { CameraSparklesIcon } from "./assets/icons/camera-sparkles";
 import { EditPhotoIcon } from "./assets/icons/edit-photo";
-import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
-import DashboardLayout from "@/screens/_layout";
-import { Link } from "@gluestack-ui/themed";
-import { Sidebar } from "@/components/Sidebar";
+import { userCreateSchema, userSchemaDetails } from "@/lib/schemas/userSchemas";
 
 const ModalComponent = ({
   showModal,
@@ -88,7 +66,7 @@ const ModalComponent = ({
     handleSubmit,
     reset,
   } = useForm<userSchemaDetails>({
-    resolver: zodResolver(userSchema),
+    resolver: zodResolver(userCreateSchema),
   });
 
   const handleKeyPress = () => {
@@ -115,7 +93,7 @@ const ModalComponent = ({
       <ModalContent>
         <Box className={"w-full h-[215px] "}>
           <Image
-            source={require("@/assets/profile-screens/profile/image2.png")}
+            source={require("@/screens/(tabs)/profile/assets/image2.png")}
             height={100}
             width={100}
             alt="Banner Image"
@@ -139,7 +117,7 @@ const ModalComponent = ({
         <Center className="w-full absolute top-16">
           <Avatar size="2xl">
             <AvatarImage
-              source={require("@/assets/profile-screens/profile/image.png")}
+              source={require("@/screens/(tabs)/profile/assets/image.png")}
             />
             <AvatarBadge className="justify-center items-center bg-background-500">
               <Icon as={EditPhotoIcon} />
@@ -162,7 +140,7 @@ const ModalComponent = ({
                   rules={{
                     validate: async (value) => {
                       try {
-                        await userSchema.parseAsync({
+                        await userCreateSchema.parseAsync({
                           firstName: value,
                         });
                         return true;
@@ -205,7 +183,7 @@ const ModalComponent = ({
                   rules={{
                     validate: async (value) => {
                       try {
-                        await userSchema.parseAsync({
+                        await userCreateSchema.parseAsync({
                           lastName: value,
                         });
                         return true;
@@ -247,7 +225,7 @@ const ModalComponent = ({
                   rules={{
                     validate: async (value) => {
                       try {
-                        await userSchema.parseAsync({ city: value });
+                        await userCreateSchema.parseAsync({ city: value });
                         return true;
                       } catch (error: any) {
                         return error.message;
@@ -292,7 +270,7 @@ const ModalComponent = ({
                   rules={{
                     validate: async (value) => {
                       try {
-                        await userSchema.parseAsync({ phoneNumber: value });
+                        await userCreateSchema.parseAsync({ phoneNumber: value });
                         return true;
                       } catch (error: any) {
                         return error.message;
@@ -355,7 +333,7 @@ const ModalComponent = ({
                   rules={{
                     validate: async (value) => {
                       try {
-                        await userSchema.parseAsync({ city: value });
+                        await userCreateSchema.parseAsync({ city: value });
                         return true;
                       } catch (error: any) {
                         return error.message;
@@ -403,7 +381,7 @@ const ModalComponent = ({
                   rules={{
                     validate: async (value) => {
                       try {
-                        await userSchema.parseAsync({ state: value });
+                        await userCreateSchema.parseAsync({ state: value });
                         return true;
                       } catch (error: any) {
                         return error.message;
@@ -454,7 +432,7 @@ const ModalComponent = ({
                   rules={{
                     validate: async (value) => {
                       try {
-                        await userSchema.parseAsync({ country: value });
+                        await userCreateSchema.parseAsync({ country: value });
                         return true;
                       } catch (error: any) {
                         return error.message;
@@ -501,7 +479,7 @@ const ModalComponent = ({
                   rules={{
                     validate: async (value) => {
                       try {
-                        await userSchema.parseAsync({
+                        await userCreateSchema.parseAsync({
                           zipCode: value,
                         });
                         return true;

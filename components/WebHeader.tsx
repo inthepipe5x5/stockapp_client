@@ -2,7 +2,7 @@ import { HStack, Text, Pressable } from "@gluestack-ui/themed";
 import { Icon, MenuIcon } from "@/components/ui/icon";
 import HeaderAppIcon from "./navigation/HeaderAppIcon";
 import UserMenu from "./navigation/UserMenu";
-import useThemeContext from "@/contexts/useThemeContext";
+import { useThemeContext } from "@/contexts/ThemeContext";
 
 type HeaderProps = {
   title: string;

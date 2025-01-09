@@ -1,9 +1,10 @@
 import React from "react";
 import { Button, ButtonIcon } from "@gluestack-ui/themed";
 import { useRouter } from "expo-router";
-import AppIcon from "./AppIcon";
+import AppIcon from "@/components/AppIcon";
+import { useUserSession } from "@/contexts/userSessionProvider";
 
-const HeaderAppIcon = (props) => {
+const HeaderAppIcon = (props: any) => {
   const router = useRouter();
   const { state } = useUserSession();
 

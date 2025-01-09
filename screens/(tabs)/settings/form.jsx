@@ -9,9 +9,8 @@ import {
   FormErrorMessage,
   Switch,
   Select,
-} from "gluestack-ui";
+} from "@gluestack-ui/themed";
 import settingsSchema from "@/lib/schemas/settingsSchema";
-
 
 const SettingsForm = (props) => {
   const {
