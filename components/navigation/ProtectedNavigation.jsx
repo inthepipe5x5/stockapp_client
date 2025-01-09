@@ -8,9 +8,6 @@ const ProtectedNavigation = (WrappedComponent) => {
 
     useEffect(() => {
       SplashScreen.preventAutoHideAsync();
-    }, []);
-
-    useEffect(() => {
       if (state.user !== null) {
         SplashScreen.hideAsync();
       }

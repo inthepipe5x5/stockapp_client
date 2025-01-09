@@ -1,9 +1,8 @@
-import DashLayout from "@/screens/layout";
+import DashboardLayout from "@/screens/_layout";
 import { useUserSession } from "@/contexts/userSessionProvider";
 import defaultUserPreferences from "@/constants/userPreferences";
 import { useEffect, useState } from "react";
 import SettingsForm from "./form";
-import { Settings } from "react-native";
 
 //settings screen
 const SettingsView = (props) => {
@@ -25,7 +24,7 @@ const SettingsView = (props) => {
 };
 
 export default () => (
-  <DashLayout>
+  <DashboardLayout>
     <SettingsView />
-  </DashLayout>
+  </DashboardLayout>
 );

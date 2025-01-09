@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { Pressable } from "@/components/ui/pressable";
 import { type LucideIcon } from "lucide-react-native";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
@@ -21,15 +20,14 @@ import { Heading } from "@/components/ui/heading";
 import { Image } from "@/components/ui/image";
 import { ScrollView } from "@/components/ui/scroll-view";
 import { Avatar, AvatarBadge, AvatarImage } from "@/components/ui/avatar";
-import { useRouter } from "expo-router";
-import { ProfileIcon } from "./assets/icons/profile";
+import { ProfileIcon } from "@/screens/(tabs)/profile/assets/icons/profile";
 import { Center } from "@/components/ui/center";
-import { SubscriptionIcon } from "./assets/icons/subscription";
-import { DownloadIcon } from "./assets/icons/download";
-import { FaqIcon } from "./assets/icons/faq";
-import { NewsBlogIcon } from "./assets/icons/news-blog";
-import { GlobeIcon } from "./assets/icons/globe";
-import { InboxIcon } from "./assets/icons/inbox";
+import { SubscriptionIcon } from "@/screens/(tabs)/profile/assets/icons/subscription";
+import { DownloadIcon } from "@/screens/(tabs)/profile/assets/icons/download";
+import { FaqIcon } from "@/screens/(tabs)/profile/assets/icons/faq";
+import { NewsBlogIcon } from "@/screens/(tabs)/profile/assets/icons/news-blog";
+import { GlobeIcon } from "@/screens/(tabs)/profile/assets/icons/globe";
+import { InboxIcon } from "@/screens/(tabs)/profile/assets/icons/inbox";
 import { Divider } from "@/components/ui/divider";
 import { isWeb } from "@gluestack-ui/nativewind-utils/IsWeb";
 import DashboardLayout from "@/screens/_layout";
@@ -92,7 +90,6 @@ const userData: UserStats[] = [
   },
 ];
 
-
 interface AccountCardType {
   iconName: LucideIcon | typeof Icon;
   subText: string;
@@ -131,7 +128,7 @@ const MainContent = () => {
         <VStack className="h-full w-full pb-8" space="2xl">
           <Box className="relative w-full md:h-[478px] h-[380px]">
             <Image
-              source={require("@/assets/profile-screens/profile/image2.png")} //TODO: get a different profile background
+              source={require("@/screens/(tabs)/profile/assets/image2.png")} //TODO: get a different profile background
               height={100}
               width={100}
               alt="Banner Image"
@@ -140,10 +137,10 @@ const MainContent = () => {
           </Box>
           <HStack className="absolute pt-6 px-10 hidden md:flex">
             <Link href={"/(tabs)/(dashboard)/index"}>
-              <Text className="text-typography-900 font-roboto">home</Text>
+              <Text className="text-typography-900 font-roboto">Home</Text>
             </Link>
             &gt; {` `}
-            <Text className="font-semibold text-typography-900 ">profile</Text>
+            <Text className="font-semibold text-typography-900 ">Profile</Text>
           </HStack>
           <Center className="absolute md:mt-14 mt-6 w-full md:px-10 md:pt-6 pb-4">
             <VStack space="lg" className="items-center">
@@ -152,7 +149,7 @@ const MainContent = () => {
                   alt="Profile Image"
                   height={100}
                   width={100}
-                  source={require("@/assets/profile-screens/profile/image.png")}
+                  source={require("@/assets/image.png")}
                 />
                 <AvatarBadge />
               </Avatar>
@@ -226,7 +223,7 @@ const MainContent = () => {
               <HStack space="2xl" className="items-center">
                 <Box className="md:h-20 md:w-20 h-10 w-10">
                   <Image
-                    source={require("@/assets/profile-screens/profile/image1.png")}
+                    source={require("@/screens/(tabs)/profile/assets/image1.png")}
                     height={100}
                     width={100}
                     alt="Promo Image"

@@ -1,4 +1,4 @@
-import settings from "../@/screens/(tabs)/settings";
+import * as SettingsView from "@/screens/(tabs)/settings";
 
 //settings view
-export default settings;
+export default SettingsView;

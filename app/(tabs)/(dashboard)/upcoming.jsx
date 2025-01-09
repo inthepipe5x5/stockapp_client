@@ -1,3 +1,3 @@
-import { NewsAndFeed } from "../@/screens/(tabs)/newsfeed/index";
+import { NewsAndFeed } from "@/screens/(tabs)/newsfeed/index";
 
 export default () => <NewsAndFeed />;

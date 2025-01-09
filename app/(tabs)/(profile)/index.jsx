@@ -1,3 +1,3 @@
-import * as ProfileScreen from "../@/screens/profile-screens/profile/index";
+import Profile from "@/screens/(tabs)/profile/index";
 
-export default ProfileScreen;
+export default Profile;

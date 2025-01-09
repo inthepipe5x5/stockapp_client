@@ -16,8 +16,8 @@ interface MemberData {
   description: string;
 }
 
-const MemberActionCards = (MEMBERS_DATA: MemberData[]) => {
-  MEMBERS_DATA.map((item, index) => {
+const MemberActionCards = (memberData: MemberData[]) => {
+  memberData.map((item, index) => {
     return (
       <HStack
         className="p-4 items-center h-full border border-border-300 rounded-xl"
@@ -48,6 +48,7 @@ const MemberActionCards = (MEMBERS_DATA: MemberData[]) => {
       </HStack>
     );
   });
-  return MEMBERS_DATA;
+  return memberData;
 };
 export default MemberActionCards;
+export { MemberData };

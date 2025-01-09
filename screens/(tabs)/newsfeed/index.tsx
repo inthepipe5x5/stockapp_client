@@ -11,42 +11,40 @@ import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
 import { Avatar, AvatarFallbackText } from "@/components/ui/avatar";
 import DashboardLayout from "@/screens/_layout";
 import UpcomingEvents from "./UpcomingEvents";
-import MemberActionCards from "./MemberActionCards";
-import BlogCards from "./BlogCards";
-
-
+import MemberActionCards, { MemberData } from "./MemberActionCards";
+import BlogCards, { BlogData } from "./BlogCards";
 
 const WORLD_DATA: BlogData[] = [
   {
-    bannerUri: require("@/assets/news-feed/news-and-feed/image3.png"),
+    bannerUri: require("@/screens/(tabs)/newsfeed/assets/image3.png"),
     title: "The Power of Positive Thinking",
     description:
       "Discover how the power of positive thinking can transform your life, boost your confidence, and help you overcome challenges. Explore practical tips and techniques to cultivate a positive mindset for greater happiness and success.",
     publishedDate: "May 15, 2023",
   },
   {
-    bannerUri: require("@/assets/news-feed/news-and-feed/image4.png"),
+    bannerUri: require("@/screens/(tabs)/newsfeed/assets/image4.png"),
     title: "The Power of Positive Thinking",
     description:
       "Discover how the power of positive thinking can transform your life, boost your confidence, and help you overcome challenges. Explore practical tips and techniques to cultivate a positive mindset for greater happiness and success.",
     publishedDate: "May 15, 2023",
   },
   {
-    bannerUri: require("@/assets/news-feed/news-and-feed/image5.png"),
+    bannerUri: require("@/screens/(tabs)/newsfeed/assets/image5.png"),
     title: "The Power of Positive Thinking",
     description:
       "Discover how the power of positive thinking can transform your life, boost your confidence, and help you overcome challenges. Explore practical tips and techniques to cultivate a positive mindset for greater happiness and success.",
     publishedDate: "May 15, 2023",
   },
   {
-    bannerUri: require("@/assets/news-feed/news-and-feed/image3.png"),
+    bannerUri: require("@/screens/(tabs)/newsfeed/assets/image3.png"),
     title: "The Power of Positive Thinking",
     description:
       "Discover how the power of positive thinking can transform your life, boost your confidence, and help you overcome challenges. Explore practical tips and techniques to cultivate a positive mindset for greater happiness and success.",
     publishedDate: "May 15, 2023",
   },
   {
-    bannerUri: require("@/assets/news-feed/news-and-feed/image4.png"),
+    bannerUri: require("@/screens/(tabs)/newsfeed/assets/image4.png"),
     title: "The Power of Positive Thinking",
     description:
       "Discover how the power of positive thinking can transform your life, boost your confidence, and help you overcome challenges. Explore practical tips and techniques to cultivate a positive mindset for greater happiness and success.",
@@ -55,21 +53,21 @@ const WORLD_DATA: BlogData[] = [
 ];
 const BLOGS_DATA: BlogData[] = [
   {
-    bannerUri: require("@/assets/news-feed/news-and-feed/image.png"),
+    bannerUri: require("@/screens/(tabs)/newsfeed/assets/image.png"),
     title: "The Power of Positive Thinking",
     description:
       "Discover how the power of positive thinking can transform your life, boost your confidence, and help you overcome challenges. Explore practical tips and techniques to cultivate a positive mindset for greater happiness and success.",
     publishedDate: "May 15, 2023",
   },
   {
-    bannerUri: require("@/assets/news-feed/news-and-feed/image2.png"),
+    bannerUri: require("@/screens/(tabs)/newsfeed/assets/image2.png"),
     title: "The Power of Positive Thinking",
     description:
       "Discover how the power of positive thinking can transform your life, boost your confidence, and help you overcome challenges. Explore practical tips and techniques to cultivate a positive mindset for greater happiness and success.",
     publishedDate: "May 15, 2023",
   },
   {
-    bannerUri: require("@/assets/news-feed/news-and-feed/image2.png"),
+    bannerUri: require("@/screens/(tabs)/newsfeed/assets/image2.png"),
     title: "The Power of Positive Thinking",
     description:
       "Discover how the power of positive thinking can transform your life, boost your confidence, and help you overcome challenges. Explore practical tips and techniques to cultivate a positive mindset for greater happiness and success.",
@@ -78,17 +76,17 @@ const BLOGS_DATA: BlogData[] = [
 ];
 const MEMBERS_DATA: MemberData[] = [
   {
-    bannerUri: require("@/assets/news-feed/news-and-feed/image6.png"),
+    bannerUri: require("@/screens/(tabs)/newsfeed/assets/image6.png"),
     name: "Emily Zho",
     description: "Designer by heart, writer by profession, talks about design",
   },
   {
-    bannerUri: require("@/assets/news-feed/news-and-feed/image7.png"),
+    bannerUri: require("@/screens/(tabs)/newsfeed/assets/image7.png"),
     name: "Ram Narayan",
     description: "Founder of Fortune 500 company Alo, talks about",
   },
   {
-    bannerUri: require("@/assets/news-feed/news-and-feed/image8.png"),
+    bannerUri: require("@/screens/(tabs)/newsfeed/assets/image8.png"),
     name: "David John",
     description: "Member of all things metal, talks about music and art. ",
   },
