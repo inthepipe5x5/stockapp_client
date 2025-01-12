@@ -3,30 +3,30 @@ import { Tabs, Stack } from "expo-router";
 import { useUserSession } from "@/contexts/userSessionProvider";
 
 const TopLevelNavigator = () => {
-  // const { state } = useUserSession();
+  const { isAuthenticated } = useUserSession();
 
   // // Define different tab configurations for auth and non-auth users
   // const authenticatedTabs = (
   return (
-    <Tabs>
-      <Tabs.Screen name="(tabs)/home" options={{ tabBarLabel: "Home" }} />
-      <Tabs.Screen
+    <Stack>
+      <Stack.Screen name="(tabs)/home" options={{ tabBarLabel: "Home" }} />
+      <Stack.Screen
         name="(tabs)/(dashboard)/index"
         options={{ tabBarLabel: "Dashboard" }}
       />
-      <Tabs.Screen
+      <Stack.Screen
         name="(tabs)/(search)/index"
         options={{ tabBarLabel: "Search" }}
       />
-      <Tabs.Screen
+      <Stack.Screen
         name="(tabs)/(profile)/index"
         options={{ tabBarLabel: "Profile" }}
       />
-      <Tabs.Screen
+      <Stack.Screen
         name="+not-found"
         options={{ tabBarLabel: "Error: Page Not Found" }}
       />
-    </Tabs>
+    </Stack>
   );
 
   // const unauthenticatedTabs = (

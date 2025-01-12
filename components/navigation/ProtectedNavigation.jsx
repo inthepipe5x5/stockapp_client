@@ -4,16 +4,16 @@ import { useUserSession } from "../../contexts/userSessionProvider";
 
 const ProtectedNavigation = (WrappedComponent) => {
   return (props) => {
-    const { state } = useUserSession();
+    const { isAuthenticated } = useUserSession();
 
     useEffect(() => {
       SplashScreen.preventAutoHideAsync();
-      if (state.user !== null) {
+      if (isAuthenticated && state !== null) {
         SplashScreen.hideAsync();
       }
-    }, [state.user]);
+    }, [isAuthenticated]);
 
-    if (!state || !state === null || !state.user || state.user === null) {
+    if (!isAuthenticated) {
       return <Redirect replace to="/(auth)/index" />;
     }
 

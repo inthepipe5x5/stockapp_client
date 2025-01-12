@@ -276,6 +276,7 @@ async function signOut(dispatch) {
  */
 const UserSessionContext = createContext({
   state: defaultSession,
+  isAuthenticated: false, // default to false; will be derived from state
   dispatch: () => {},
   signIn: (credentials) => {}, // accepts credentials for OAuth or password-based login
   signOut: () => {},
@@ -339,6 +340,8 @@ export const UserSessionProvider = ({ children }) => {
     <UserSessionContext.Provider
       value={{
         state,
+        //authentication state => true if user and session are present
+        isAuthenticated: !!state?.user && !!state?.session, //double ! to turn each value into a boolean
         dispatch,
         signIn: handleSignIn,
         signOut: handleSignOut,
@@ -355,6 +358,9 @@ export const UserSessionProvider = ({ children }) => {
  *  useUserSession Hook
  *  ---------------------------
  */
+
+// const isAuthenticated = !!state?.user && !!state?.session;
+
 export function useUserSession() {
-  return useContext(UserSessionContext);
+  return useContext({ UserSessionContext });
 }

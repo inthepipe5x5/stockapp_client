@@ -8,19 +8,22 @@ import { use, useEffect } from "react";
  * Manages the top-level navigation between sections like Home, Dashboard, Search, and Profile.
  */
 function RootTabLayout() {
-  const { state } = useUserSession();
-  const [auth, setAuth] = useState(false);
+  const { isAuthenticated } = useUserSession();
+  const [auth, setAuth] = useState(isAuthenticated);
 
   useEffect(() => {
-    if (state && state.user) {
-      setAuth(true);
-    } else {
-      setAuth(false);
-    }
-  }, [state]);
+    setAuth(isAuthenticated);
+  }, [isAuthenticated]);
 
   return (
-    <Tabs>
+    <Tabs
+      name="(stacks)"
+      options={{
+        presentation: "transparentModal",
+        animation: "fade",
+        headerShown: false,
+      }}
+    >
       <Tabs.Screen
         replace={() => {
           auth ? <Redirect to="/(auth))" /> : null;
@@ -55,14 +58,7 @@ function RootTabLayout() {
         }}
         name="/(inbox)"
       />
-      <Tabs.Screen
-        name="(stacks)"
-        options={{
-          presentation: "transparentModal",
-          animation: "fade",
-          headerShown: false,
-        }}
-      />
+      <Tabs.Screen />
     </Tabs>
   );
 }
