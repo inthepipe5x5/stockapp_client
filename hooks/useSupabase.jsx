@@ -1,8 +1,8 @@
-//helper function that queries supabase DB with react query
+// Helper function that queries Supabase DB with React Query
 import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
-import { supabase } from "../services/supabase";
-
+// import supabase from "@/services/supabase/supabase.js";
+import supabase from "@/services/supabase/supabase";
 /**
  * Custom hook to query data from a Supabase table with optional filters, limit, sorting, and grouping.
  *
@@ -12,6 +12,7 @@ import { supabase } from "../services/supabase";
  * @param {number|null} [limit=null] - Optional limit on the number of records to fetch.
  * @param {string} [sort] - Optional column name to sort the results by.
  * @param {string} [groupBy] - Optional column name to group the results by.
+ * @param {object} [queryOptions={}] - Optional query options to pass to useQuery.
  * @returns {object} - The result of the query wrapped in a react-query object.
  *
  * @example
@@ -21,7 +22,8 @@ import { supabase } from "../services/supabase";
  *   { isActive: true },
  *   10,
  *   'createdAt',
- *   'role'
+ *   'role',
+ *   { enabled: true }
  * );
  *
  * if (isLoading) return <div>Loading...</div>;
@@ -41,7 +43,8 @@ const useSupabaseQuery = (
   filters = {},
   limit = null,
   sort,
-  groupBy
+  groupBy,
+  queryOptions = {} // Optional query options to pass to useQuery
 ) => {
   const fetchData = useCallback(async () => {
     let query = supabase.from(table).select();
@@ -56,7 +59,7 @@ const useSupabaseQuery = (
     if (sort && typeof sort === "string") {
       query = query.order(sort);
     }
-    if (groupBy && typeof sort === "string") {
+    if (groupBy && typeof groupBy === "string") {
       query = query.group(groupBy);
     }
 
@@ -65,9 +68,9 @@ const useSupabaseQuery = (
     if (error) throw error;
 
     return schema ? schema.parse(data) : data;
-  }, [table, schema, filters, limit]);
+  }, [table, schema, filters, limit, sort, groupBy]);
 
-  return useQuery([table, filters, limit], fetchData);
+  return useQuery([table, filters, limit, sort, groupBy], fetchData, queryOptions);
 };
 
 export default useSupabaseQuery;

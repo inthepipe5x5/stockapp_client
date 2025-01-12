@@ -3,7 +3,7 @@ import * as AuthSession from "expo-auth-session";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
 import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
-import { supabase } from "@/services/supabase.js";
+import supabase from "@/services/supabase/supabase.js";
 
 WebBrowser.maybeCompleteAuthSession(); // required for web only
 const redirectTo = AuthSession.makeRedirectUri();
@@ -26,9 +26,7 @@ const createSessionFromUrl = async (url: string) => {
 
 type Provider = "google" | "facebook" | "apple";
 
-const performOAuth = async (
-  provider: Provider = "google"
-) => {
+const performOAuth = async (provider: Provider = "google") => {
   const redirectUrl = AuthSession.makeRedirectUri({ useProxy: true });
 
   const { data, error } = await supabase.auth.signInWithOAuth({
@@ -44,10 +42,7 @@ const performOAuth = async (
     const result = await AuthSession.startAsync({ authUrl: data.url });
     if (result.type === "success") {
       // Send tokens to your backend
-      await (
-        result.params.access_token,
-        result.params.refresh_token
-      );
+      await (result.params.access_token, result.params.refresh_token);
       // Your backend handles session creation and returns necessary info
       // You can then update your app's state accordingly
     }

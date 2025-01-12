@@ -9,22 +9,26 @@ import * as SecureStore from "expo-secure-store";
 import { router } from "expo-router";
 import { Platform } from "react-native";
 
-import supabase from "../services/supabase";
+import supabase from "../services/supabase/supabase";
 import defaultUserPreferences from "../constants/userPreferences";
 import { useThemeContext } from "./ThemeContext";
 import useSupabaseQuery from "../hooks/useSupabase";
 import isExpired from "../utils/isExpired";
 import { appName } from "@/constants/appName";
-
+import {
+  fetchProfile,
+  fetchUserHouseholds,
+  fetchOverDueTasks,
+} from "../services/supabase/fetchSession";
 const defaultSession = {
   user: null,
   preferences: defaultUserPreferences,
   token: null,
   session: null,
   drafts: [],
-  // households: [],
-  // inventories: [],
-  // tasks: [],
+  households: {}, // {household_id: {household_data}}
+  active_inventories: [], //list of inventories within active household
+  // active_tasks: [],
 };
 /**
  * The function ensureSessionNotExpired checks if a session is still active.
@@ -44,7 +48,6 @@ const defaultSession = {
 }
   @returns {boolean} - true if session is fresh; false by default 
  */
-
 const ensureSessionNotExpired = (sessionData) => {
   if (!sessionData || sessionData === null) return false;
 
@@ -76,24 +79,6 @@ const ensureSessionNotExpired = (sessionData) => {
 
   const expiry = findExpiryDate(sessionData);
   return !expiry || expiry === null ? !isExpired(expiry) : false;
-};
-
-const fetchProfile = async (user_id) => {
-  try {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select()
-      .eq("user_id", user_id)
-      .limit(1);
-
-    if (!data || data === null || error)
-      throw new Error("Error fetching user profile");
-    else {
-      return data;
-    }
-  } catch (error) {
-    console.error(error);
-  }
 };
 
 const actionTypes = Object.freeze({
@@ -181,10 +166,10 @@ const fetchSession = async () => {
     } else {
       storedSession = await SecureStore.getItemAsync(`${appName}_session`);
     }
-
+    //handle stored session found
     if (storedSession) {
       const parsedSession = JSON.parse(storedSession);
-
+      //check if session is expired
       if (ensureSessionNotExpired(parsedSession)) {
         const userProfile = await fetchProfile(parsedSession.user.id);
         return {
@@ -192,7 +177,9 @@ const fetchSession = async () => {
           user: { ...parsedSession.user, profile: userProfile },
         };
       } else {
+        //handle no session found
         console.warn("Stored session expired.");
+        return { profile: null, session: null };
       }
     }
 
@@ -278,7 +265,7 @@ async function signOut(dispatch) {
     await supabase.auth.signOut();
     await SecureStore.deleteItemAsync(`${appName}_session`);
     dispatch({ type: actionTypes.LOGOUT });
-    router.push("/login");
+    router.replace("(auth)/index");
   } catch (err) {
     console.error("Sign-out error:", err);
   }

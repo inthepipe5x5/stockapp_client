@@ -3,7 +3,7 @@ import * as AuthSession from "expo-auth-session";
 import * as QueryParams from "expo-auth-session/build/QueryParams";
 import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
-import { supabase } from "../services/supabase.js";
+import  supabase  from "../services/supabase/supabase.js";
 
 WebBrowser.maybeCompleteAuthSession(); // required for web only
 const redirectTo = AuthSession.makeRedirectUri();
