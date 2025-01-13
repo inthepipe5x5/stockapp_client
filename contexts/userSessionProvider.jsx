@@ -1,4 +1,4 @@
-import React, {
+import {
   createContext,
   useContext,
   useReducer,
@@ -12,13 +12,10 @@ import { Platform } from "react-native";
 import supabase from "../services/supabase/supabase";
 import defaultUserPreferences from "../constants/userPreferences";
 import { useThemeContext } from "./ThemeContext";
-import useSupabaseQuery from "../hooks/useSupabase";
 import isExpired from "../utils/isExpired";
 import { appName } from "@/constants/appName";
 import {
   fetchProfile,
-  fetchUserHouseholds,
-  fetchOverDueTasks,
 } from "../services/supabase/fetchSession";
 const defaultSession = {
   user: null,
@@ -28,7 +25,7 @@ const defaultSession = {
   drafts: [],
   households: {}, // {household_id: {household_data}}
   active_inventories: [], //list of inventories within active household
-  // active_tasks: [],
+  // tasks: [],
 };
 /**
  * The function ensureSessionNotExpired checks if a session is still active.
@@ -312,7 +309,7 @@ export const UserSessionProvider = ({ children }) => {
     };
     const { session: storedSession, profile } = initialize();
 
-    const { data: subscription } = supabase.auth.onAuthStateChange(
+    const { data } = supabase.auth.onAuthStateChange(
       (event, session = storedSession) => {
         if (["SIGNED_IN", "TOKEN_REFRESHED", "USER_UPDATED"].includes(event)) {
           dispatch({ type: actionTypes.SET_SESSION, payload: session });
@@ -324,9 +321,9 @@ export const UserSessionProvider = ({ children }) => {
         }
       }
     );
-
-    return () => subscription?.unsubscribe();
-  }, [updatePreferences]);
+    //return clean up function
+    // return () => data.subscription?.unsubscribe() ?? null;
+  }, [state, updatePreferences]);
 
   const handleSignIn = useCallback((userCredentials) => {
     signIn(userCredentials, dispatch);
@@ -336,12 +333,16 @@ export const UserSessionProvider = ({ children }) => {
     signOut(dispatch);
   }, []);
 
+  const isAuthenticated = () => {
+    (!!state?.user && !!state?.session) ?? false;
+  };
+
   return (
     <UserSessionContext.Provider
       value={{
         state,
         //authentication state => true if user and session are present
-        isAuthenticated: !!state?.user && !!state?.session, //double ! to turn each value into a boolean
+        isAuthenticated: !!isAuthenticated(), //double ! to turn each value into a boolean
         dispatch,
         signIn: handleSignIn,
         signOut: handleSignOut,
@@ -358,8 +359,6 @@ export const UserSessionProvider = ({ children }) => {
  *  useUserSession Hook
  *  ---------------------------
  */
-
-// const isAuthenticated = !!state?.user && !!state?.session;
 
 export function useUserSession() {
   return useContext({ UserSessionContext });

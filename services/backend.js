@@ -5,7 +5,7 @@ React Query and Supabase authentication. */
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { supabase } from "./supabase";
 
-export default class Backend {
+ class Backend {
   static baseURL = process.env.BACKEND_URL;
 
   static async getSession() {

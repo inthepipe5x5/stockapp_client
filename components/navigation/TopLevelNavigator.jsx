@@ -1,9 +1,10 @@
 import React from "react";
 import { Tabs, Stack } from "expo-router";
-import { useUserSession } from "@/contexts/userSessionProvider";
+// import { useUserSession } from "@/contexts/userSessionProvider";
 
 const TopLevelNavigator = () => {
-  const { isAuthenticated } = useUserSession();
+  // const { isAuthenticated } = useUserSession();
+
 
   // // Define different tab configurations for auth and non-auth users
   // const authenticatedTabs = (

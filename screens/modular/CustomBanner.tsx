@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { componentsList } from "@/utils/list";
+// import { componentsList } from "@/utils/list";//TODO: not sure where this from
 import { ScrollView } from "@/components/ui/scroll-view";
 import { Box } from "@/components/ui/box";
 import { Image as ExpoImage } from "expo-image";
@@ -14,7 +14,6 @@ import { VStack } from "@/components/ui/vstack";
 import { Heading } from "@/components/ui/heading";
 import { ChevronRightIcon, Icon } from "@/components/ui/icon";
 import AppIcon from "@/components/AppIcon";
-import { useRouter } from "expo-router";
 import { useWindowDimensions } from "react-native";
 import PropTypes from "prop-types";
 cssInterop(SafeAreaView, { className: "style" });
@@ -26,20 +25,10 @@ cssInterop(ExpoImage, { className: "style" });
  * @returns a Banner Component
  */
 
-CustomBanner.propTypes = {
-  info: PropTypes.string,
-  headerTitle: PropTypes.string,
-  description: PropTypes.string,
-  bannerImage: PropTypes.shape({
-    light: PropTypes.string,
-    dark: PropTypes.string,
-  }),
-};
-
-const CustomBanner = (props) => {
+const CustomBanner = (props: any) => {
   const { colorMode }: any = useContext(ColorModeContext);
-  const router = useRouter();
-  const { headerTitle }: any = props || router.options;
+  // const router = useRouter();
+  const { headerTitle }: any = props;
   return (
     <HStack className="flex-1 max-w-[1730px] w-full mx-auto justify-between">
       <VStack className="w-full md:max-w-[630px] lg:max-w-[400px] xl:max-w-[480px] mx-5 md:ml-8 mb-8 mt-10 lg:my-[44px] xl:ml-[80px] flex-1">
@@ -51,9 +40,8 @@ const CustomBanner = (props) => {
             alt="logo_image"
             width={24} //h-5 is roughly 20px, h-7 is roughly 28px => 24px for consistency
             height={24} //w-5 is roughly 20px, w-7 is roughly 28px => 24px for consistency
-            className="rounded-sm" 
+            className="rounded-sm"
             // className="h-5 w-5 rounded-sm lg:h-6 lg:w-6 xl:h-7 xl:w-7"
-
           />
           <Text className="font-medium text-sm lg:text-base xl:text-lg text-typography-900">
             {props.info ? props.info : "Powered by gluestack-ui v2"}
@@ -84,5 +72,13 @@ const CustomBanner = (props) => {
     </HStack>
   );
 };
-
+CustomBanner.propTypes = {
+  info: PropTypes.string,
+  headerTitle: PropTypes.string,
+  description: PropTypes.string,
+  bannerImage: PropTypes.shape({
+    light: PropTypes.string,
+    dark: PropTypes.string,
+  }),
+};
 export default CustomBanner;

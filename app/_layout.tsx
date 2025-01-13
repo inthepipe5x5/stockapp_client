@@ -1,5 +1,5 @@
 import "@/global.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import "react-native-reanimated";
@@ -9,15 +9,14 @@ import { StatusBar } from "expo-status-bar";
 import { useUserSession } from "../contexts/userSessionProvider";
 import TopLevelNavigator from "../components/navigation/TopLevelNavigator";
 import { UserSessionProvider } from "../contexts/userSessionProvider";
-import { ThemeProvider } from "../contexts/ThemeContext";
+import { ThemeProvider, useThemeContext } from "../contexts/ThemeContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { NavigationContainer } from "@react-navigation/native";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const { theme, state, isAuthenticated } = useUserSession();
+  // const { theme } = useThemeContext();
   const queryClient = new QueryClient();
 
   // Load custom fonts
@@ -40,10 +39,8 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <UserSessionProvider>
-          <GluestackUIProvider mode={theme?.colors?.mode ?? "system"}>
-            <NavigationContainer>
-              <TopLevelNavigator />
-            </NavigationContainer>
+          <GluestackUIProvider mode={"system"}>
+            <TopLevelNavigator />
             <StatusBar style="auto" />
           </GluestackUIProvider>
         </UserSessionProvider>

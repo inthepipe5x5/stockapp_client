@@ -1,6 +1,7 @@
 import "../env.js"; // Load environment variables
 import React from "react";
 import RootLayout from "./_layout";
+import {View} from "react-native";
 import { Box, Text } from "@gluestack-ui/themed";
 import { useUserSession } from "@/contexts/userSessionProvider";
 import { useRouter } from "expo-router";
@@ -12,27 +13,33 @@ import { Link as LinkIcon } from "lucide-react-native";
 const RootPage = () => {
   const { router } = useRouter();
   //get user state
-  const { state } = useUserSession();
+  // const { state } = useUserSession();
 
   //reroute to /features if no user is logged in
-  return !state || !state.user || state?.user === null ? (
-    <Center>
-      <VStack className="gap-1">
-        <Text>RootPage</Text>
-        <Button
-          className="primary"
-          variant="outline"
-          onPress={() => router.push("/(auth)/index")}
-        >
-          <ButtonIcon as={LinkIcon} />
-        </Button>
-      </VStack>
-    </Center>
-  ) : (
-    () => {
-      router.push("/features");
-    }
+  // return !state || !state.user || state?.user === null ? (
+  //   <Center>
+  //     <VStack className="gap-1">
+  //       <Text>RootPage</Text>
+  //       <Button
+  //         className="primary"
+  //         variant="outline"
+  //         onPress={() => router.push("/(auth)/index")}
+  //       >
+  //         <ButtonIcon as={LinkIcon} />
+  //       </Button>
+  //     </VStack>
+  //   </Center>
+  // ) : (
+  //   () => {
+  //     router.replace("/features");
+  //   }
+  // );
+
+  return (
+    <View>
+      <Text>TESTETSET ST</Text>
+    </View>
   );
 };
 
-export default () => RootPage;
+export default () => RootPage();
